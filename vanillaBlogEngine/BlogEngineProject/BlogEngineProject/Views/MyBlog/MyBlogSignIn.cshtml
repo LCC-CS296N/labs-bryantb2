@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "My Blog Sign In";
+}
+<section>
+    <h1 class="universalPageTitleStyle mt-5 replyTitleCustomSpacing">Sign In to Proceed to Your Profile</h1>
+    <div class="row mb-5 ml-2">
+        <div class="col-4 p-4 customBorder">
+            <article class="text-dark mb-2">
+                <form class="inputFieldText well form-horizontal" asp-controller="MyBlog" asp-action="SignInRedirect" method="get" id="signIn_form">
+                    <fieldset>
+                        <legend class="formHeaderText mb-1">Sign In</legend>
+                        @{
+                            if (ViewBag.ErrorMessage != null)
+                            {
+                                <h2 class="text-danger mb-1">@ViewBag.ErrorMessage</h2>
+                            }
+                        }
+                        <div class="form-group">
+                            <label for="username" class=" control-label text-dark">Username</label>
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <input name="username" placeholder="Username" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="password" class=" control-label text-dark">Password</label>
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <input name="password" placeholder="Password" class="form-control" type="password">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark text-light customReplyButtonStyle">Sign In</button>
+                    </fieldset>
+                </form>
+            </article>
+            <a asp-controller="MyBlog" asp-action="SignUp" class="" role="button" aria-pressed="true">Or Sign Up</a>
+        </div>
+    </div>
+</section>

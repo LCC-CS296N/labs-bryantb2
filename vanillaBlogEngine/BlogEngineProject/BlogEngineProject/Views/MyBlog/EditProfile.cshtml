@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewData["Title"] = "Edit Thread";
+}
+@{ int numberOfCategories = ThreadCategories.NumberOfCategories(); }
+@model Thread
+
+<section>
+    <h1 class="universalPageTitleStyle mt-5 replyTitleCustomSpacing">Makes Changes to Your Thread</h1>
+    <div class="row mb-5 ml-2">
+        <div class="col-6 p-4 customBorder">
+            <article class="text-dark mb-2">
+                <form class="inputFieldText well form-horizontal" asp-route-userId=@ViewBag.UserId asp-route-threadId=@Model.ThreadID asp-controller="MyBlog" asp-action="EditProfile" method="post" id="editThread_form">
+                    <fieldset>
+                        <legend class="formHeaderText mb-1">Options</legend>
+
+                        <div class="form-group">
+                            <label for="editedThreadname" class=" control-label text-dark">Update Thread Name</label>
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <input name="editedThreadname" placeholder="New Thread name" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editedThreadCategory" class="control-label text-dark">Update Thread Category</label>
+                            <div class="input-group">
+                                <select name="editedThreadCategory" class="form-control selectpicker text-dark">
+                                    <option value="">Select a category</option>
+                                    @{
+                                        for (int i = 0; i < numberOfCategories; i++)
+                                        {
+                                            <option value=@ThreadCategories.GetCategory(i)> @ThreadCategories.GetCategory(i) </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="editedBio" class=" control-label text-dark">Update Bio</label>
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <textarea name="editedBio" placeholder="Update Bio" class="form-control customMessageArea" type="text"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark text-light customReplyButtonStyle">Update Thread</button>
+                    </fieldset>
+                </form>
+            </article>
+        </div>
+        <div class="col-6 p-4">
+            <div class="mb-4 ">
+                <h2>Current Thread Name:</h2>
+                <p class="text-dark ">@Model.Name</p>
+            </div>
+            <div class="mb-4 ">
+                <h2>Current Thread Category:</h2>
+                <p class="text-dark ">@Model.Category</p>
+            </div>
+            <div class="mb-4 ">
+                <h2>Current Thread bio:</h2>
+                <p class="text-dark ">@Model.Bio</p>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+@model List<Thread>
+@{ int numberOfCategories = ThreadCategories.NumberOfCategories(); }
+<section>
+    <h1 class="mt-5 mb-5 universalPageTitleStyle">Home Page</h1>
+    <div class="d-flex mb-3">
+        <h3 class="pr-5">Discover threads that interest you!</h3>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Filter By Category
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                @{
+                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-category=-1> No filter </a>
+                    for (int i = 0; i < numberOfCategories; i++)
+                    {
+                        <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-category=@i> @ThreadCategories.GetCategory(i) </a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    @{
+        foreach (Thread t in Model)
+        {
+            <article id="@t.Name" class="bg-secondary profileContainer mb-3">
+                <div class="innerContentContainer d-flex p-4 text-light row">
+                    <div class="col-9 d-flex">
+                        <img class="maxSize profileImageStyle img-thumbnail" src="https://theofficeanalytics.files.wordpress.com/2017/11/dwight.jpeg?w=1200" alt="" />
+                        <div class="pl-4">
+                            <h1 id="userName" class="pb-2"><a class="text-light" href="#">@t.Name</a></h1>
+                            <div class="text-white">
+                                <b>Creator:</b> @t.CreatorName
+                                <span class="pr-2">&nbsp;</span>
+                                <b>Category:</b> @t.Category
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <a class="mt-2 editProfileButton btn text-dark btn-light btn-md active" role="button" aria-pressed="true" asp-controller="Home" asp-action="ViewBlog" asp-route-threadID=@t.ThreadID>View Thread</a>
+                        <a class="mt-2 editProfileButton btn text-dark btn-light btn-md active" role="button" aria-pressed="true" asp-controller="About" asp-action="ComingSoon">Favorite this?</a>
+                    </div>
+                </div>
+            </article>
+        }
+    }
+</section>
+
+

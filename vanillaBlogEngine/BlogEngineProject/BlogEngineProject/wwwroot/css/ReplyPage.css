@@ -1,0 +1,25 @@
+﻿/* Margin and Padding */
+.replyTitleCustomSpacing {
+    margin-bottom: 7%;
+}
+
+/* Text Styles */
+.formHeaderText {
+    font-family: 'FuturaPT-Medium';
+    font-size: 25pt;
+}
+
+.inputFieldText {
+    font-family: 'FuturaPT-Book';
+    font-size: 15pt;
+}
+
+/* Entry field Styles */
+.customMessageArea {
+    height: 400px !important;
+    width: 100%;
+}
+
+.customReplyButtonStyle {
+    width:50%;
+}

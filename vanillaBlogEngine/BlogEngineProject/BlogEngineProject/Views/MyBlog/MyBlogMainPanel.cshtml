@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "My Blog Dashboard";
+}
+@model User
+@{ Thread thread = Model.OwnedThread;}
+<section>
+    @{
+        if (thread != null)
+        {
+            <h1 class="universalPageTitleStyle mt-5 mb-5">Welcome to the your thread dashboard, @Model.Username</h1>
+            <div class="row mb-5">
+                <div class="col-3 p-4">
+                    <div class="d-flex flex-column">
+                        <div class="mb-3 ">
+                            <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="EditProfile" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Edit Profile</a>
+                        </div>
+                        <div class="mb-3 ">
+                            <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="PostDashboard" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Modify Posts</a>
+                        </div>
+                        <div class="mb-3 ">
+                            <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="GettingStarted" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Blog Editor Tips</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-9 p-4 ">
+                    <div class="customBorder p-4">
+                        <div class="profileDetails profileDetailsText mb-5">
+                            <div class="d-flex mb-4">
+                                <img class="maxSize profileImageStyle img-thumbnail" src="https://theofficeanalytics.files.wordpress.com/2017/11/dwight.jpeg?w=1200" alt="" />
+                                <div class="pl-4">
+                                    <h1 id="userName" class="pb-2 text-dark profileTitle">
+                                        <a class="profileTitle">@thread.Name</a>
+                                    </h1>
+                                    <div class="text-dark">
+                                        <b>Creator:</b> @thread.CreatorName
+                                        <span class="pr-2">&nbsp;</span>
+                                        <b>Category:</b> @thread.Category
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-dark">
+                                <b class="bioTitle">Bio</b>
+                                <p>
+                                    @thread.Bio
+                                </p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="mb-2 postSectionTitle">Current Posts</h3>
+
+                            @{
+                                foreach (Post p in thread.Posts)
+                                {
+                                    <div class="overflow-auto mb-5">
+                                        <div class="text-light darkParagraphBackground p-4">
+                                            <h1 class="postTitle">@p.Title</h1>
+                                            <p class="pageParagraph"> @p.Content</p>
+                                            <div class="d-flex flex-row">
+                                                <p class="digitalSignature">Posted on @p.TimeStamp</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <h1 class="text-dark profileTitle mb-3">
+                Oh darn, looks like you haven't created your thread yet. Click the button below to build it!
+            </h1>
+            <div class="mb-3 ">
+                <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="GettingStarted" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Getting Started</a>
+            </div>
+        }
+    }
+
+</section>
+
+

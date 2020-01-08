@@ -1,0 +1,67 @@
+﻿/*FONT IMPORTATION*/
+@font-face {
+    font-family: 'FuturaPT-Bold';
+    src: local('FuturaPT Bold'), local('FuturaPTBold'), url(../fonts/FuturaPTBold.otf);
+}
+
+@font-face {
+    font-family: "FuturaPT-Medium";
+    src: local('FuturaPT Medium'), local('FuturaPTMedium'), url(../fonts/FuturaPTMedium.otf) format("opentype");
+}
+
+@font-face {
+    font-family: "FuturaPT-MediumOblique";
+    src: local('FuturaPT Medium Oblique'), local('FuturaPTMediumOblique'),url(../fonts/FuturaPTCondMediumOblique.otf) format("opentype");
+}
+
+@font-face {
+    font-family: "FuturaPT-Book";
+    src: local('FuturaPT Book'), local('FuturaPTBook'), url(../fonts/FuturaPTBook.otf) format("opentype");
+}
+
+@font-face {
+    font-family: "FuturaPT-Light";
+    src: local('FuturaPT Light'), local('FuturaPTLight'),url(../fonts/FuturaPTLight.otf) format("opentype");
+}
+
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    min-height: 100%;
+}
+
+/* NAVBAR STYLES */
+.navbar-brand {
+    font-family: 'FuturaPT-Medium';
+    font-size: 23pt;
+    color: white;
+}
+
+.nav-item {
+    /*spacing out nav items*/
+    margin-left: 35px;
+    font-size: 13pt;
+}
+
+a.nav-link:hover {
+    background-color: #868e96 !important;
+    color: white !important;
+    border-radius: 3px;
+}
+
+/* Universal Page Styles */
+.universalPageTitleStyle {
+    font-family: 'FuturaPT-Medium';
+    font-size: 40pt;
+}
+
+/* About page navigation button styles */
+.navigationButton:hover {
+    background-color: white !important;
+    border: 3px solid blue;
+}

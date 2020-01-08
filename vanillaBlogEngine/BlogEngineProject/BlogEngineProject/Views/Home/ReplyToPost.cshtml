@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Replying to Post";
+}
+<section>
+    <h1 class="universalPageTitleStyle mt-5 replyTitleCustomSpacing">Replying to [poster username]'s post</h1>
+    <div class="row mb-5">
+        <div class="col-5">
+            <article class="text-dark">
+                <!--Form design borrowed from https://codepen.io/juff03/pen/OXaXRG -->
+                <form class="inputFieldText well form-horizontal" asp-controller="" asp-action="" method="post" id="reply_form">
+                    <fieldset>
+
+                        <!-- Form Name -->
+                        <legend class="formHeaderText mb-4">Write a Reply</legend>
+
+                        <!-- Text input-->
+
+                        <div class="form-group">
+                            <label for="replier" class=" control-label text-dark">Your Username</label>
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <input name="replier" placeholder="Username" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+
+                        <div class="form-group mb-4">
+                            <label for="replyMessageContent" class=" control-label text-dark">Message</label>
+                            <div class=" inputGroupContainer">
+                                <div class="input-group">
+                                    <textarea name="replyMessageContent" placeholder="Write message here" class="form-control customMessageArea" type="text"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Button -->
+                        <button type="submit" class="btn btn-dark text-light customReplyButtonStyle">SUBMIT</button>
+                    </fieldset>
+                </form>
+            </article>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-6">
+            <article class="contextBoxRestricted text-light darkParagraphBackground p-4 mb-3">
+                <h1 class="messageTitle">[username]'s message:</h1>
+                <br />
+                <p class="pageParagraph">[message content]</p>
+            </article>
+            <div class="row justify-content-end">
+                <a asp-controller="Home" asp-action="Index" class="navigationButton btn btn-light btn-small active m-2 mr-4" role="button" aria-pressed="true">Go Home</a>
+                <a asp-controller="Home" asp-action="ViewBlog" class="navigationButton btn btn-light btn-small active m-2" role="button" aria-pressed="true">Go Back</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+

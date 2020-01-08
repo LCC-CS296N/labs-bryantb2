@@ -1,0 +1,22 @@
+﻿
+/* Login Styles */
+.customBorder {
+    border: solid 4px #343a40;
+    border-radius: 3px;
+}
+
+/* Dashboard Text Styles */
+.dashboardOverviewTitle {
+    font-family: 'FuturaPT-Medium';
+    font-size: 35pt;
+}
+
+/* Control Panel Button Styling */
+.optionButtonCustom:hover {
+    background-color: white !important;
+    border: 3px solid blue;
+}
+
+.optionButtonCustom:hover {
+    color: #868e96 !important;
+}

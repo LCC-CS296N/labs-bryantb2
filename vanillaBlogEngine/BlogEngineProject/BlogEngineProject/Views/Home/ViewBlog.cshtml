@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "View Blog";
+}
+@model Thread
+
+<section>
+    <div class="profileDetails profileDetailsText my-5">
+        <div class="d-flex mb-4">
+            <img class="maxSize profileImageStyle img-thumbnail" src="https://theofficeanalytics.files.wordpress.com/2017/11/dwight.jpeg?w=1200" alt="" />
+            <div class="pl-4">
+                <h1 id="userName" class="pb-2 text-dark profileTitle">
+                    <a class="profileTitle">@Model.Name</a>
+                </h1>
+                <div class="text-dark">
+                    <b>Creator:</b> @Model.CreatorName
+                    <span class="pr-2">&nbsp;</span>
+                    <b>Category:</b> @Model.Category
+                </div>
+            </div>
+        </div>
+        <div class="text-dark">
+            <b class="bioTitle">Bio</b>
+            <p>@Model.Bio</p>
+        </div>
+    </div>
+
+    <div>
+        <h3 class="mb-2 postSectionTitle">Posts</h3>
+        @{
+            foreach (Post p in Model.Posts)
+            {
+                <div class="overflow-auto mb-5">
+                    <div class="text-light darkParagraphBackground p-4">
+                        <h1 class="postTitle">@p.Title</h1>
+                        <p class="pageParagraph"> @p.Content</p>
+                        <div class="d-flex flex-row">
+                            <p class="digitalSignature">Posted on @p.TimeStamp</p>
+                        </div>
+                    </div>
+                    <a class="btn btn-link text-dark" href="#">Reply</a>
+                </div>
+            }
+        }
+    </div>
+</section>
+

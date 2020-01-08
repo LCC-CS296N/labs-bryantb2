@@ -1,0 +1,46 @@
+﻿
+/* Image Container Styling */
+.profileImageStyle {
+    border-style: none;
+    background: none;
+    padding: 0px;
+    border-radius: 0px;
+    object-fit: cover;
+    min-width:400px;
+}
+
+.maxSize {
+    min-height: 110px;
+    max-height: 110px;
+    min-width: 110px;
+    max-width: 110px;
+}
+
+
+/* Content Containers */
+.profileContainer {
+    margin-top: 5%;
+    margin-right: 5%;
+}
+
+.innerContentContainer {
+    margin-left: 2%;
+}
+
+
+/* Button Styling */
+.editProfileButton:hover {
+    background-color: white !important;
+    border: 3px solid blue;
+}
+
+.editProfileButton:hover {
+    color: grey !important;
+}
+
+
+/* Text Styling */
+.subTitleStyle {
+    font-family: 'FuturaPT-Book';
+    font-size: 20pt;
+}

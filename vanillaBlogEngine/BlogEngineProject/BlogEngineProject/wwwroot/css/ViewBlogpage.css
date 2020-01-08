@@ -1,0 +1,48 @@
+﻿
+/* Profile styling */
+.profileTitle {
+    font-family: 'FuturaPT-Bold';
+    font-size: 35pt;
+}
+
+.bioTitle {
+    font-family: 'FuturaPT-Medium';
+}
+
+.profileDetailsText {
+    font-family: 'FuturaPT-Book';
+    font-size: 15pt;
+}
+
+.profileDetails {
+
+}
+
+.postSectionTitle {
+    font-family: 'FuturaPT-Medium';
+    font-size: 30pt;
+}
+
+/* Post Styles */
+.postTitle {
+    font-family: 'FuturaPT-Bold';
+    font-size: 19pt;
+}
+
+.pageParagraph {
+    font-family: 'FuturaPT-Book';
+    font-size: 15pt;
+}
+
+.reply {
+    max-width: 60%;
+}
+
+.replyContentJustify {
+    justify-content: flex-end;
+}
+
+.darkParagraphBackground {
+    background-color: rgba(125,125,125,0.8);
+}
+

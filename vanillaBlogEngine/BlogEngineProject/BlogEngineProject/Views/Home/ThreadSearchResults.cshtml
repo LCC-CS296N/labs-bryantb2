@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Search Results";
+}
+@model List<Thread>
+<section>
+    <h1 class="mt-5 universalPageTitleStyle">Search Results for @ViewBag.SearchQuery</h1>
+    @{
+        if (Model == null)
+        {
+            <h1>Sorry, but we couldn't find anything matching that search parameter :(</h1>
+        }
+        else
+        {
+            foreach (Thread t in Model)
+            {
+                <article id="@t.Name" class="bg-secondary profileContainer mb-3">
+                    <div class="innerContentContainer d-flex p-4 text-light row">
+                        <div class="col-9 d-flex">
+                            <img class="maxSize profileImageStyle img-thumbnail" src="https://theofficeanalytics.files.wordpress.com/2017/11/dwight.jpeg?w=1200" alt="" />
+                            <div class="pl-4">
+                                <h1 id="userName" class="pb-2"><a class="text-light" href="#">@t.Name</a></h1>
+                                <div class="text-white">
+                                    <b>Creator:</b> @t.CreatorName
+                                    <span class="pr-2">&nbsp;</span>
+                                    <b>Category:</b> @t.Category
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <a class="mt-2 editProfileButton btn text-dark btn-light btn-md active" role="button" aria-pressed="true" asp-controller="Home" asp-action="ViewBlog" asp-route-threadID=@t.ThreadID>View Thread</a>
+                            <a class="mt-2 editProfileButton btn text-dark btn-light btn-md active" role="button" aria-pressed="true" asp-controller="About" asp-action="ComingSoon">Favorite this?</a>
+                        </div>
+                    </div>
+                </article>
+            }
+        }
+    }
+    <a asp-controller="Home" asp-action="ThreadSearch" class="navigationButton btn btn-light btn-small active mt-3" role="button" aria-pressed="true">Go Back</a>
+</section>
+
+
