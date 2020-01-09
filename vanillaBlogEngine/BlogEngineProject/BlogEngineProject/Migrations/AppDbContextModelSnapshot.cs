@@ -50,7 +50,9 @@ namespace BlogEngineProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<string>("ImageURL");
 
@@ -58,7 +60,9 @@ namespace BlogEngineProject.Migrations
 
                     b.Property<DateTime>("TimeStamp");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.HasKey("PostID");
 

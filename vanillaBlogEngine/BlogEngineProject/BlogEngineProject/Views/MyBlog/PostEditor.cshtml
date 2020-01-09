@@ -2,8 +2,12 @@
 @{
     ViewData["Title"] = "Post Editor";
 }
-@model Post
+@model Post;
 <section>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+
     <h1 class="universalPageTitleStyle mt-5 replyTitleCustomSpacing">Post Editor</h1>
     <row class="row mb-5">
         <div class="col-12">
@@ -26,19 +30,21 @@
                         <legend class="formHeaderText mb-1">Change Post Content</legend>
 
                         <div class="form-group">
-                            <label for="editedTitle" class=" control-label text-dark">Post Title</label>
+                            <label asp-for="Title" class=" control-label text-dark">Post Title</label>
+                            <div><span asp-validation-for="Title" style="color:red"> </span></div>
                             <div class="inputGroupContainer">
                                 <div class="input-group">
-                                    <input name="editedTitle" placeholder="Title" class="form-control" type="text">
+                                    <input asp-for="Title" placeholder="Title" class="form-control" type="text">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group mb-4">
-                            <label for="editedContent" class=" control-label text-dark">Post Content</label>
+                            <label asp-for="Content" class=" control-label text-dark">Post Content</label>
+                            <div><span asp-validation-for="Content" style="color:red"> </span></div>
                             <div class="inputGroupContainer">
                                 <div class="input-group">
-                                    <textarea name="editedContent" placeholder="Post Text Content" class="form-control customMessageArea" type="text"></textarea>
+                                    <textarea asp-for="Content" placeholder="Post Text Content" class="form-control customMessageArea" type="text"></textarea>
                                 </div>
                             </div>
                         </div>

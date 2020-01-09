@@ -196,7 +196,7 @@ namespace BlogEngineProject.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult BuildThread(string Name, string Category, string Bio, string userId)
+        public RedirectToActionResult BuildThread(string Name, string category, string Bio, string userId)
         {
             // validate input (not empty AND trim trailing white space)
             // search thread repo and determine if the threadname is in use
@@ -208,7 +208,7 @@ namespace BlogEngineProject.Controllers
             // redirect to ReloadBlogDashboard action method
             var trimmedThreadname = "";
             var trimmedBio = "";
-            if (Name != null && Name != null && Bio != null)
+            if (Name != null && category != null && Bio != null)
             {
                 trimmedThreadname = Name.Trim();
                 trimmedBio = Bio.Trim();
@@ -235,7 +235,7 @@ namespace BlogEngineProject.Controllers
             {
                 Name = Name,
                 Bio = Bio,
-                Category = Category,
+                Category = category,
                 CreatorName = user.Username
             };
             user.OwnedThread = newThread;
@@ -245,15 +245,15 @@ namespace BlogEngineProject.Controllers
             return RedirectToAction("ReloadBlogDashboard");
         }
 
-        public RedirectToActionResult AddPost(string postTitle, string postContent, string threadId, string userId)
+        public RedirectToActionResult AddPost(string Title, string Content, string threadId, string userId)
         {
             // add post to thread
             // make a temp data entry containing the userId
             // redirect to ReloadBlogDashboard action method
             Post newPost = new Post()
             {
-                Title = postTitle,
-                Content = postContent,
+                Title = Title,
+                Content = Content,
                 TimeStamp = DateTime.Now
             };
             
@@ -332,7 +332,10 @@ namespace BlogEngineProject.Controllers
             int ID = int.Parse(userId);
             User userObject = userRepo.GetUserById(ID);
 
-            return View(userObject);
+            // using viewbag because I need to use a post model for validation
+            ViewBag.OwnedThread = userObject.OwnedThread;
+            ViewBag.UserID = userObject.UserID;
+            return View();
         }
 
         public IActionResult EditProfile(string userId)
