@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlogEngineProject.Models
 {
@@ -11,8 +12,14 @@ namespace BlogEngineProject.Models
         private List<Post> posts = new List<Post>();
         // auto implemented properties
         public int ThreadID { get; set; }
+
+        [StringLength(100, MinimumLength = 2)]
+        [Required]
         public String Name { get; set; }
         public String CreatorName { get; set; }
+
+        [StringLength(100, MinimumLength = 10)]
+        [Required]
         public String Bio { get; set; }
         public String Category { get; set; }
         public String ProfilePicURL { get; set; }

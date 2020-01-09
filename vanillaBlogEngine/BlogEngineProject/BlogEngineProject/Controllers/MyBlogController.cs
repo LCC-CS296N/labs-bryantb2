@@ -43,7 +43,7 @@ namespace BlogEngineProject.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult SignUpRedirect(string username, string password, string passwordConfirmation)
+        public RedirectToActionResult SignUpRedirect(string username, string password, string ConfirmPassword)
         {
             // validate username and password (not empty AND trim trailing white space)
             // search repo to see if username is already taken
@@ -56,11 +56,11 @@ namespace BlogEngineProject.Controllers
             var trimmedPassword = "";
             var trimmedConfirmPassword = "";
 
-            if (username != null && password != null && passwordConfirmation != null)
+            if (username != null && password != null && ConfirmPassword != null)
             {
                 trimmedUsername = username.Trim();
                 trimmedPassword = password.Trim();
-                trimmedConfirmPassword = passwordConfirmation.Trim();
+                trimmedConfirmPassword = ConfirmPassword.Trim();
             }
             else
             {
@@ -84,6 +84,7 @@ namespace BlogEngineProject.Controllers
             {
                 Username = trimmedUsername,
                 Password = trimmedConfirmPassword,
+                ConfirmPassword = trimmedConfirmPassword,
                 DateJoined = DateTime.Now
             };
             userRepo.AddUsertoRepo(newUser);
@@ -188,11 +189,14 @@ namespace BlogEngineProject.Controllers
                 // if message tempdata entry is not null, pass the message to the view
                 ViewBag.ErrorMessage = TempData["ThreadCreationMessage"];
             }
-            return View(userObject);
+            // passing ownedThread and UserID in via viewbag because I will use a tuple in the view
+            ViewBag.OwnedThread = userObject.OwnedThread;
+            ViewBag.UserID = userObject.UserID;
+            return View();
         }
 
         [HttpPost]
-        public RedirectToActionResult BuildThread(string threadName, string threadCategory, string bio, string userId)
+        public RedirectToActionResult BuildThread(string Name, string Category, string Bio, string userId)
         {
             // validate input (not empty AND trim trailing white space)
             // search thread repo and determine if the threadname is in use
@@ -204,10 +208,10 @@ namespace BlogEngineProject.Controllers
             // redirect to ReloadBlogDashboard action method
             var trimmedThreadname = "";
             var trimmedBio = "";
-            if (threadName != null && threadCategory != null && bio != null)
+            if (Name != null && Name != null && Bio != null)
             {
-                trimmedThreadname = threadName.Trim();
-                trimmedBio = bio.Trim();
+                trimmedThreadname = Name.Trim();
+                trimmedBio = Bio.Trim();
             }
             else
             {
@@ -229,9 +233,9 @@ namespace BlogEngineProject.Controllers
 
             Thread newThread = new Thread()
             {
-                Name = threadName,
-                Bio = bio,
-                Category = threadCategory,
+                Name = Name,
+                Bio = Bio,
+                Category = Category,
                 CreatorName = user.Username
             };
             user.OwnedThread = newThread;
