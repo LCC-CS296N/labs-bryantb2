@@ -2,17 +2,17 @@
 @{
     ViewData["Title"] = "My Blog Dashboard";
 }
-@model User
+@model AppUser
 @{ Thread thread = Model.OwnedThread;}
 <section>
     @{
         if (thread != null)
         {
-            <h1 class="universalPageTitleStyle mt-5 mb-5">Welcome to the your thread dashboard, @Model.Username</h1>
+            <h1 class="universalPageTitleStyle mt-5 mb-5">Welcome to the your thread dashboard, @Model.Name</h1>
             <div class="row mb-5">
                 <div class="col-3 p-4">
                     <div class="d-flex flex-column">
-                        <div class="mb-3 ">
+                        <div class="mb-3 "> 
                             <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="EditProfile" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Edit Profile</a>
                         </div>
                         <div class="mb-3 ">

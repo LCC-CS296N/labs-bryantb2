@@ -9,12 +9,12 @@ namespace BlogEngineProject.Repositories
     public class FakeUserRepo : IUserRepo
     {
         // CLASS FIELDS
-        private static List<User> userList = new List<User>();
+        private static List<AppUser> userList = new List<AppUser>();
         
         // METHODS
-        public  List<User> GetUsers() => userList;
-        public  User GetUserById(int userId) => FindUserById(userId);
-        public  User GetUserByUsername(string username) => FindUserByUsername(username);
+        public  List<AppUser> GetUsers() => userList;
+        public  AppUser GetUserById(int userId) => FindUserById(userId);
+        public  AppUser GetUserByUsername(string username) => FindUserByUsername(username);
         public  bool GetUsernameEligibility(string username) => !(IsUsernameTaken(username));
         public  bool CheckUserCredentials(string username, string password) => AreUserCredentialsValid(username, password);
 
@@ -26,9 +26,9 @@ namespace BlogEngineProject.Repositories
             // search user list
             // add the user's thread if the username matches the searchString
             List<Thread> threadSearchResult = new List<Thread>();
-            foreach(User u in userList)
+            foreach(AppUser u in userList)
             {
-                if (u.Username == searchString)
+                if (u.Name == searchString)
                     threadSearchResult.Add(u.OwnedThread);
             }
 
@@ -46,9 +46,9 @@ namespace BlogEngineProject.Repositories
             return threadSearchResult;
         }
 
-        public  void AddUsertoRepo(User user)
+        public  void AddUsertoRepo(AppUser user)
         {
-            if (IsUsernameTaken(user.Username) == false)
+            if (IsUsernameTaken(user.Name) == false)
             {
                 userList.Add(user);
             }
@@ -58,12 +58,12 @@ namespace BlogEngineProject.Repositories
             }
         }
 
-        public  User RemoveUserfromRepo(int userID)
+        public  AppUser RemoveUserfromRepo(int userID)
         {
             // find user
             // then remove it
-            User removedUser = null;
-            foreach (User u in userList)
+            AppUser removedUser = null;
+            foreach (AppUser u in userList)
             {
                 if (u.UserID == userID)
                 {
@@ -79,9 +79,9 @@ namespace BlogEngineProject.Repositories
         {
             // run a foreach loop on the user list
             // return true if username and password match an existing user
-            foreach (User u in userList)
+            foreach (AppUser u in userList)
             {
-                if (u.Username == username && u.Password == password)
+                if (u.Name == username && u.Password == password)
                     return true;
             }
             return false;
@@ -91,19 +91,19 @@ namespace BlogEngineProject.Repositories
         {
             // looks through the user list for an identical username string
             // if the username is taken, return true
-            foreach(User u in userList)
+            foreach(AppUser u in userList)
             {
-                if (u.Username == username)
+                if (u.Name == username)
                     return true;
             }
             return false;
         }
 
-        private  User FindUserById(int userId)
+        private  AppUser FindUserById(int userId)
         {
             // run foreach loop on userlist
             // return true if current user's ID matches the parameter
-            foreach (User u in userList)
+            foreach (AppUser u in userList)
             {
                 if (u.UserID == userId)
                     return u;
@@ -111,7 +111,7 @@ namespace BlogEngineProject.Repositories
             return null;
         }
 
-        private  User FindUserByUsername(string username)
+        private  AppUser FindUserByUsername(string username)
         {
             // determine if username exists
             // run foreach loop on userlist
@@ -119,9 +119,9 @@ namespace BlogEngineProject.Repositories
             bool doesUsernameExist = IsUsernameTaken(username);
             if (doesUsernameExist == true)
             {
-                foreach(User u in userList)
+                foreach(AppUser u in userList)
                 {
-                    if (u.Username == username)
+                    if (u.Name == username)
                         return u;
                 }
             }

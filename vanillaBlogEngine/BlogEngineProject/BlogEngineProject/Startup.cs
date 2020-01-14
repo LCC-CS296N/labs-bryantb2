@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BlogEngineProject.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace BlogEngineProject
 {
@@ -43,6 +44,9 @@ namespace BlogEngineProject
             // add context string for DB
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
                 Configuration["ConnectionString"]));
+
+            // adds identity to project
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +73,9 @@ namespace BlogEngineProject
                     name: "default",
                     template: "{controller=About}/{action=Index}/{id?}");
             });
+
+            // adding authentication support
+            app.UseAuthentication();
 
             // adding seed data
             SeedData.Seed(app);

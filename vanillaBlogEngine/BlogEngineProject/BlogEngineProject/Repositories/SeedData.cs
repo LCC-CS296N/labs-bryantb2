@@ -25,9 +25,9 @@ namespace BlogEngineProject.Repositories
                 const string password = "1234";
                 const string gender = "female";
                 DateTime dateJoinedD = DateTime.Now;
-                User newUser = new User() // user1
+                AppUser newUser = new AppUser() // user1
                 {
-                    Username = username,
+                    Name = username,
                     Password = password,
                     Gender = gender,
                     DateJoined = dateJoinedD
@@ -35,7 +35,7 @@ namespace BlogEngineProject.Repositories
 
                 const string bio = "hello there friends";
                 const string name = "testThread1";
-                string creatorName = newUser.Username;
+                string creatorName = newUser.Name;
                 string category = ThreadCategories.GetCategory(0);
                 Thread thread1 = new Thread()
                 {
@@ -55,9 +55,9 @@ namespace BlogEngineProject.Repositories
                 const string password2 = "5678";
                 const string gender2 = "male";
                 DateTime dateJoinedD2 = DateTime.Now;
-                User newUser2 = new User() // user2
+                AppUser newUser2 = new AppUser() // user2
                 {
-                    Username = username2,
+                    Name = username2,
                     Password = password2,
                     Gender = gender2,
                     DateJoined = dateJoinedD2
@@ -65,7 +65,7 @@ namespace BlogEngineProject.Repositories
 
                 const string bio2 = "hello there friends";
                 const string name2 = "testThread2";
-                string creatorName2 = newUser2.Username;
+                string creatorName2 = newUser2.Name;
                 string category2 = ThreadCategories.GetCategory(1);
                 Thread thread2 = new Thread()
                 {
@@ -84,9 +84,9 @@ namespace BlogEngineProject.Repositories
                 const string password3 = "1011";
                 const string gender3 = "male";
                 DateTime dateJoinedD3 = DateTime.Now;
-                User newUser3 = new User() // user2
+                AppUser newUser3 = new AppUser() // user2
                 {
-                    Username = username3,
+                    Name = username3,
                     Password = password3,
                     Gender = gender3,
                     DateJoined = dateJoinedD3
@@ -94,7 +94,7 @@ namespace BlogEngineProject.Repositories
 
                 const string bio3 = "hello there friends";
                 const string name3 = "testThread3";
-                string creatorName3 = newUser3.Username;
+                string creatorName3 = newUser3.Name;
                 string category3 = ThreadCategories.GetCategory(2);
                 Thread thread3 = new Thread()
                 {

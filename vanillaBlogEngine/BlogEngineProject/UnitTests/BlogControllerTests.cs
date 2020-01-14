@@ -29,7 +29,7 @@ namespace UnitTests
 
             // assert
             int repoCount = userRepo.GetUsers().Count;
-            string usernameFromRepo = userRepo.GetUsers()[repoCount - 1].Username;
+            string usernameFromRepo = userRepo.GetUsers()[repoCount - 1].Name;
             Assert.Equal(username, usernameFromRepo); // gets most recently added user
         }
     }

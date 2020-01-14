@@ -127,10 +127,10 @@ namespace UnitTests
             const string gender = "male";
             DateTime dateJoinedD = DateTime.Now;
             Thread ownedThread = null;
-            User newUser = new User()
+            AppUser newUser = new AppUser()
             {
                 UserID = id,
-                Username = username,
+                Name = username,
                 Password = password,
                 Gender = gender,
                 DateJoined = dateJoinedD,
@@ -140,10 +140,10 @@ namespace UnitTests
 
             // act
             userRepo.AddUsertoRepo(newUser);
-            User removedUser = userRepo.RemoveUserfromRepo(id);
+            AppUser removedUser = userRepo.RemoveUserfromRepo(id);
 
             // assert
-            Assert.Equal(newUser.Username, removedUser.Username);
+            Assert.Equal(newUser.Name, removedUser.Name);
             Assert.Equal(newUser.DateJoined, removedUser.DateJoined);
             Assert.Equal(newUser.UserID, removedUser.UserID);
         }
@@ -161,10 +161,10 @@ namespace UnitTests
             const string gender = "female";
             DateTime dateJoinedD = DateTime.Now;
             Thread ownedThread = null;
-            User newUser = new User() // user1
+            AppUser newUser = new AppUser() // user1
             {
                 UserID = id,
-                Username = username,
+                Name = username,
                 Password = password,
                 Gender = gender,
                 DateJoined = dateJoinedD,
@@ -173,7 +173,7 @@ namespace UnitTests
 
             const string bio = "hello there friends";
             const string name = "testThread3";
-            string creatorName = newUser.Username;
+            string creatorName = newUser.Name;
             const string category = "games and music";
             int threadId = ObjectIDBuilder.GetThreadID();
             Thread thread1 = new Thread()
@@ -193,10 +193,10 @@ namespace UnitTests
             const string gender2 = "male";
             DateTime dateJoinedD2 = DateTime.Now;
             Thread ownedThread2 = null;
-            User newUser2 = new User() // user2
+            AppUser newUser2 = new AppUser() // user2
             {
                 UserID = id2,
-                Username = username2,
+                Name = username2,
                 Password = password2,
                 Gender = gender2,
                 DateJoined = dateJoinedD2,
@@ -205,7 +205,7 @@ namespace UnitTests
 
             const string bio2 = "hello there friends";
             const string name2 = "testThread4";
-            string creatorName2 = newUser2.Username;
+            string creatorName2 = newUser2.Name;
             const string category2 = "games and music";
             int threadId2 = ObjectIDBuilder.GetThreadID();
             Thread thread2 = new Thread()
