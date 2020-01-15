@@ -43,7 +43,7 @@ namespace BlogEngineProject.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult SignUpRedirect(string username, string password, string ConfirmPassword)
+        public RedirectToActionResult SignUpRedirect(string Name, string Password, string ConfirmPassword)
         {
             // validate username and password (not empty AND trim trailing white space)
             // search repo to see if username is already taken
@@ -56,10 +56,10 @@ namespace BlogEngineProject.Controllers
             var trimmedPassword = "";
             var trimmedConfirmPassword = "";
 
-            if (username != null && password != null && ConfirmPassword != null)
+            if (Name != null && Name != null && ConfirmPassword != null)
             {
-                trimmedUsername = username.Trim();
-                trimmedPassword = password.Trim();
+                trimmedUsername = Name.Trim();
+                trimmedPassword = Password.Trim();
                 trimmedConfirmPassword = ConfirmPassword.Trim();
             }
             else
@@ -94,7 +94,7 @@ namespace BlogEngineProject.Controllers
         }
 
 
-        public RedirectToActionResult SignInRedirect(string username, string password)
+        public RedirectToActionResult SignInRedirect(string Name, string Password)
         {
             // validate username and password (not empty AND trim trailing white space)
             // search repo for username
@@ -104,10 +104,10 @@ namespace BlogEngineProject.Controllers
             var trimmedUsername = "";
             var trimmedPassword = "";
 
-            if (username != null && password != null)
+            if (Name != null && Password != null)
             {
-                trimmedUsername = username.Trim();
-                trimmedPassword = password.Trim();
+                trimmedUsername = Name.Trim();
+                trimmedPassword = Password.Trim();
             }
             else
             {

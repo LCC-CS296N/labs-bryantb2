@@ -12,7 +12,7 @@
             <div class="row mb-5">
                 <div class="col-3 p-4">
                     <div class="d-flex flex-column">
-                        <div class="mb-3 "> 
+                        <div class="mb-3 ">
                             <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="EditProfile" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Edit Profile</a>
                         </div>
                         <div class="mb-3 ">
@@ -20,6 +20,9 @@
                         </div>
                         <div class="mb-3 ">
                             <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="GettingStarted" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Blog Editor Tips</a>
+                        </div>
+                        <div class="mb-3 ">
+                            <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="#" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Delete Thread and Profile</a>
                         </div>
                     </div>
                 </div>
