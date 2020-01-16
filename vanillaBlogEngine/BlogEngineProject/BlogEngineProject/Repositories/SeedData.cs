@@ -15,7 +15,7 @@ namespace BlogEngineProject.Repositories
             AppDbContext context = app.ApplicationServices.GetRequiredService<AppDbContext>();
             context.Database.EnsureCreated();
 
-            if(!context.Users.Any())
+            if(!context.StandardUsers.Any())
             {
                 RealUserRepo userRepo = new RealUserRepo(context);
                 RealThreadRepo threadRepo = new RealThreadRepo(context);
@@ -25,10 +25,11 @@ namespace BlogEngineProject.Repositories
                 const string password = "1234";
                 const string gender = "female";
                 DateTime dateJoinedD = DateTime.Now;
-                AppUser newUser = new AppUser() // user1
+                StandardUser newUser = new StandardUser() // user1
                 {
                     Name = username,
                     Password = password,
+                    ConfirmPassword = password,
                     Gender = gender,
                     DateJoined = dateJoinedD
                 };
@@ -55,10 +56,11 @@ namespace BlogEngineProject.Repositories
                 const string password2 = "5678";
                 const string gender2 = "male";
                 DateTime dateJoinedD2 = DateTime.Now;
-                AppUser newUser2 = new AppUser() // user2
+                StandardUser newUser2 = new StandardUser() // user2
                 {
                     Name = username2,
                     Password = password2,
+                    ConfirmPassword = password2,
                     Gender = gender2,
                     DateJoined = dateJoinedD2
                 };
@@ -84,10 +86,11 @@ namespace BlogEngineProject.Repositories
                 const string password3 = "1011";
                 const string gender3 = "male";
                 DateTime dateJoinedD3 = DateTime.Now;
-                AppUser newUser3 = new AppUser() // user2
+                StandardUser newUser3 = new StandardUser() // user2
                 {
                     Name = username3,
                     Password = password3,
+                    ConfirmPassword = password3,
                     Gender = gender3,
                     DateJoined = dateJoinedD3
                 };

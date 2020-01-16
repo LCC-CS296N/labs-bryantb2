@@ -8,13 +8,13 @@ namespace BlogEngineProject.Repositories
 {
     public interface IUserRepo
     {
-        List<AppUser> GetUsers();
-        AppUser GetUserById(int userId);
-        AppUser GetUserByUsername(string username);
+        List<StandardUser> GetUsers();
+        StandardUser GetUserById(int userId);
+        StandardUser GetUserByUsername(string username);
         bool GetUsernameEligibility(string username);
         bool CheckUserCredentials(string username, string password);
         List<Thread> SearchForUsersAndThreads(String searchString);
-        void AddUsertoRepo(AppUser user);
-        AppUser RemoveUserfromRepo(int userID);
+        void AddUsertoRepo(StandardUser user);
+        StandardUser RemoveUserfromRepo(int userID);
     }
 }

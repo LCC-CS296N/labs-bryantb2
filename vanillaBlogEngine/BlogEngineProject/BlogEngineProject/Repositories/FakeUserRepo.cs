@@ -9,12 +9,12 @@ namespace BlogEngineProject.Repositories
     public class FakeUserRepo : IUserRepo
     {
         // CLASS FIELDS
-        private static List<AppUser> userList = new List<AppUser>();
+        private static List<StandardUser> userList = new List<StandardUser>();
         
         // METHODS
-        public  List<AppUser> GetUsers() => userList;
-        public  AppUser GetUserById(int userId) => FindUserById(userId);
-        public  AppUser GetUserByUsername(string username) => FindUserByUsername(username);
+        public  List<StandardUser> GetUsers() => userList;
+        public  StandardUser GetUserById(int userId) => FindUserById(userId);
+        public  StandardUser GetUserByUsername(string username) => FindUserByUsername(username);
         public  bool GetUsernameEligibility(string username) => !(IsUsernameTaken(username));
         public  bool CheckUserCredentials(string username, string password) => AreUserCredentialsValid(username, password);
 
@@ -26,7 +26,7 @@ namespace BlogEngineProject.Repositories
             // search user list
             // add the user's thread if the username matches the searchString
             List<Thread> threadSearchResult = new List<Thread>();
-            foreach(AppUser u in userList)
+            foreach(StandardUser u in userList)
             {
                 if (u.Name == searchString)
                     threadSearchResult.Add(u.OwnedThread);
@@ -46,7 +46,7 @@ namespace BlogEngineProject.Repositories
             return threadSearchResult;
         }
 
-        public  void AddUsertoRepo(AppUser user)
+        public  void AddUsertoRepo(StandardUser user)
         {
             if (IsUsernameTaken(user.Name) == false)
             {
@@ -58,14 +58,14 @@ namespace BlogEngineProject.Repositories
             }
         }
 
-        public  AppUser RemoveUserfromRepo(int userID)
+        public  StandardUser RemoveUserfromRepo(int userID)
         {
             // find user
             // then remove it
-            AppUser removedUser = null;
-            foreach (AppUser u in userList)
+            StandardUser removedUser = null;
+            foreach (StandardUser u in userList)
             {
-                if (u.UserID == userID)
+                if (u.StandardUserID == userID)
                 {
                     removedUser = u;
                     userList.Remove(u);
@@ -79,7 +79,7 @@ namespace BlogEngineProject.Repositories
         {
             // run a foreach loop on the user list
             // return true if username and password match an existing user
-            foreach (AppUser u in userList)
+            foreach (StandardUser u in userList)
             {
                 if (u.Name == username && u.Password == password)
                     return true;
@@ -91,7 +91,7 @@ namespace BlogEngineProject.Repositories
         {
             // looks through the user list for an identical username string
             // if the username is taken, return true
-            foreach(AppUser u in userList)
+            foreach(StandardUser u in userList)
             {
                 if (u.Name == username)
                     return true;
@@ -99,19 +99,19 @@ namespace BlogEngineProject.Repositories
             return false;
         }
 
-        private  AppUser FindUserById(int userId)
+        private  StandardUser FindUserById(int userId)
         {
             // run foreach loop on userlist
             // return true if current user's ID matches the parameter
-            foreach (AppUser u in userList)
+            foreach (StandardUser u in userList)
             {
-                if (u.UserID == userId)
+                if (u.StandardUserID == userId)
                     return u;
             }
             return null;
         }
 
-        private  AppUser FindUserByUsername(string username)
+        private  StandardUser FindUserByUsername(string username)
         {
             // determine if username exists
             // run foreach loop on userlist
@@ -119,7 +119,7 @@ namespace BlogEngineProject.Repositories
             bool doesUsernameExist = IsUsernameTaken(username);
             if (doesUsernameExist == true)
             {
-                foreach(AppUser u in userList)
+                foreach(StandardUser u in userList)
                 {
                     if (u.Name == username)
                         return u;

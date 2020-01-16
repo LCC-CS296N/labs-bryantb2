@@ -127,9 +127,9 @@ namespace UnitTests
             const string gender = "male";
             DateTime dateJoinedD = DateTime.Now;
             Thread ownedThread = null;
-            AppUser newUser = new AppUser()
+            StandardUser newUser = new StandardUser()
             {
-                UserID = id,
+                StandardUserID = id,
                 Name = username,
                 Password = password,
                 Gender = gender,
@@ -140,12 +140,12 @@ namespace UnitTests
 
             // act
             userRepo.AddUsertoRepo(newUser);
-            AppUser removedUser = userRepo.RemoveUserfromRepo(id);
+            StandardUser removedUser = userRepo.RemoveUserfromRepo(id);
 
             // assert
             Assert.Equal(newUser.Name, removedUser.Name);
             Assert.Equal(newUser.DateJoined, removedUser.DateJoined);
-            Assert.Equal(newUser.UserID, removedUser.UserID);
+            Assert.Equal(newUser.StandardUserID, removedUser.StandardUserID);
         }
 
         [Fact]
@@ -161,9 +161,9 @@ namespace UnitTests
             const string gender = "female";
             DateTime dateJoinedD = DateTime.Now;
             Thread ownedThread = null;
-            AppUser newUser = new AppUser() // user1
+            StandardUser newUser = new StandardUser() // user1
             {
-                UserID = id,
+                StandardUserID = id,
                 Name = username,
                 Password = password,
                 Gender = gender,
@@ -193,9 +193,9 @@ namespace UnitTests
             const string gender2 = "male";
             DateTime dateJoinedD2 = DateTime.Now;
             Thread ownedThread2 = null;
-            AppUser newUser2 = new AppUser() // user2
+            StandardUser newUser2 = new StandardUser() // user2
             {
-                UserID = id2,
+                StandardUserID = id2,
                 Name = username2,
                 Password = password2,
                 Gender = gender2,

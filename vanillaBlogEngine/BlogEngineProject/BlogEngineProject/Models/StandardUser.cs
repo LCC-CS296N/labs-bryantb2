@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BlogEngineProject.Models
 {
-    public class AppUser : IdentityUser
+    public class StandardUser
     {
         // auto implemented properties
-        public int UserID { get; set; }
+        public int StandardUserID { get; set; }
 
         [StringLength(100, MinimumLength = 2)]
         [Required]

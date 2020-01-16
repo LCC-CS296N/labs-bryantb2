@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "My Blog Dashboard";
 }
-@model AppUser
+@model StandardUser
 @{ Thread thread = Model.OwnedThread;}
 <section>
     @{
@@ -13,16 +13,16 @@
                 <div class="col-3 p-4">
                     <div class="d-flex flex-column">
                         <div class="mb-3 ">
-                            <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="EditProfile" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Edit Profile</a>
+                            <a asp-route-userID=@Model.StandardUserID asp-controller="MyBlog" asp-action="EditProfile" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Edit Profile</a>
                         </div>
                         <div class="mb-3 ">
-                            <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="PostDashboard" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Modify Posts</a>
+                            <a asp-route-userID=@Model.StandardUserID asp-controller="MyBlog" asp-action="PostDashboard" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Modify Posts</a>
                         </div>
                         <div class="mb-3 ">
-                            <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="GettingStarted" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Blog Editor Tips</a>
+                            <a asp-route-userID=@Model.StandardUserID asp-controller="MyBlog" asp-action="GettingStarted" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Blog Editor Tips</a>
                         </div>
                         <div class="mb-3 ">
-                            <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="#" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Delete Thread and Profile</a>
+                            <a asp-route-userID=@Model.StandardUserID asp-controller="MyBlog" asp-action="#" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Delete Thread and Profile</a>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                 Oh darn, looks like you haven't created your thread yet. Click the button below to build it!
             </h1>
             <div class="mb-3 ">
-                <a asp-route-userID=@Model.UserID asp-controller="MyBlog" asp-action="GettingStarted" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Getting Started</a>
+                <a asp-route-userID=@Model.StandardUserID asp-controller="MyBlog" asp-action="GettingStarted" class="btn btn-secondary text-light optionButtonCustom" role="button" aria-pressed="true">Getting Started</a>
             </div>
         }
     }

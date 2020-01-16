@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogEngineProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200114195940_identity")]
-    partial class identity
+    [Migration("20200116221120_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,21 +27,21 @@ namespace BlogEngineProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AppUserId");
-
                     b.Property<string>("Content");
 
                     b.Property<DateTime>("DatePublished");
 
                     b.Property<int?>("PostID");
 
+                    b.Property<int?>("StandardUserID");
+
                     b.Property<string>("Username");
 
                     b.HasKey("CommentID");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("PostID");
+
+                    b.HasIndex("StandardUserID");
 
                     b.ToTable("Comment");
                 });
@@ -71,13 +71,40 @@ namespace BlogEngineProject.Migrations
                     b.ToTable("Post");
                 });
 
+            modelBuilder.Entity("BlogEngineProject.Models.StandardUser", b =>
+                {
+                    b.Property<int>("StandardUserID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ConfirmPassword")
+                        .IsRequired();
+
+                    b.Property<DateTime>("DateJoined");
+
+                    b.Property<string>("Gender");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int?>("OwnedThreadThreadID");
+
+                    b.Property<string>("Password")
+                        .IsRequired();
+
+                    b.HasKey("StandardUserID");
+
+                    b.HasIndex("OwnedThreadThreadID");
+
+                    b.ToTable("StandardUsers");
+                });
+
             modelBuilder.Entity("BlogEngineProject.Models.Thread", b =>
                 {
                     b.Property<int>("ThreadID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AppUserId");
 
                     b.Property<string>("Bio")
                         .IsRequired()
@@ -93,9 +120,11 @@ namespace BlogEngineProject.Migrations
 
                     b.Property<string>("ProfilePicURL");
 
+                    b.Property<int?>("StandardUserID");
+
                     b.HasKey("ThreadID");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("StandardUserID");
 
                     b.ToTable("Threads");
                 });
@@ -154,9 +183,6 @@ namespace BlogEngineProject.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -196,8 +222,6 @@ namespace BlogEngineProject.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -266,42 +290,15 @@ namespace BlogEngineProject.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BlogEngineProject.Models.AppUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("ConfirmPassword")
-                        .IsRequired();
-
-                    b.Property<DateTime>("DateJoined");
-
-                    b.Property<string>("Gender");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<int?>("OwnedThreadThreadID");
-
-                    b.Property<string>("Password")
-                        .IsRequired();
-
-                    b.Property<int>("UserID");
-
-                    b.HasIndex("OwnedThreadThreadID");
-
-                    b.HasDiscriminator().HasValue("AppUser");
-                });
-
             modelBuilder.Entity("BlogEngineProject.Models.Comment", b =>
                 {
-                    b.HasOne("BlogEngineProject.Models.AppUser")
-                        .WithMany("CommentHistory")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("BlogEngineProject.Models.Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostID");
+
+                    b.HasOne("BlogEngineProject.Models.StandardUser")
+                        .WithMany("CommentHistory")
+                        .HasForeignKey("StandardUserID");
                 });
 
             modelBuilder.Entity("BlogEngineProject.Models.Post", b =>
@@ -311,11 +308,18 @@ namespace BlogEngineProject.Migrations
                         .HasForeignKey("ThreadID");
                 });
 
+            modelBuilder.Entity("BlogEngineProject.Models.StandardUser", b =>
+                {
+                    b.HasOne("BlogEngineProject.Models.Thread", "OwnedThread")
+                        .WithMany()
+                        .HasForeignKey("OwnedThreadThreadID");
+                });
+
             modelBuilder.Entity("BlogEngineProject.Models.Thread", b =>
                 {
-                    b.HasOne("BlogEngineProject.Models.AppUser")
+                    b.HasOne("BlogEngineProject.Models.StandardUser")
                         .WithMany("FavoriteThreads")
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("StandardUserID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -361,13 +365,6 @@ namespace BlogEngineProject.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("BlogEngineProject.Models.AppUser", b =>
-                {
-                    b.HasOne("BlogEngineProject.Models.Thread", "OwnedThread")
-                        .WithMany()
-                        .HasForeignKey("OwnedThreadThreadID");
                 });
 #pragma warning restore 612, 618
         }

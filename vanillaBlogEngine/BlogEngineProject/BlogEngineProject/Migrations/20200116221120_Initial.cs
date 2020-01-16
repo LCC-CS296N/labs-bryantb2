@@ -4,63 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlogEngineProject.Migrations
 {
-    public partial class identity : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Comment_Users_UserID",
-                table: "Comment");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Threads_Users_UserID",
-                table: "Threads");
-
-            migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Threads_UserID",
-                table: "Threads");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Comment_UserID",
-                table: "Comment");
-
-            migrationBuilder.DropColumn(
-                name: "UserID",
-                table: "Threads");
-
-            migrationBuilder.DropColumn(
-                name: "UserID",
-                table: "Comment");
-
-            migrationBuilder.AddColumn<string>(
-                name: "AppUserId",
-                table: "Threads",
-                nullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
-                table: "Post",
-                maxLength: 100,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldMaxLength: 100);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Content",
-                table: "Post",
-                maxLength: 100,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldMaxLength: 100);
-
-            migrationBuilder.AddColumn<string>(
-                name: "AppUserId",
-                table: "Comment",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -93,25 +40,11 @@ namespace BlogEngineProject.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
-                    UserID = table.Column<int>(nullable: true),
-                    Name = table.Column<string>(maxLength: 100, nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    ConfirmPassword = table.Column<string>(nullable: true),
-                    Gender = table.Column<string>(nullable: true),
-                    DateJoined = table.Column<DateTime>(nullable: true),
-                    OwnedThreadThreadID = table.Column<int>(nullable: true)
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Threads_OwnedThreadThreadID",
-                        column: x => x.OwnedThreadThreadID,
-                        principalTable: "Threads",
-                        principalColumn: "ThreadID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -220,15 +153,87 @@ namespace BlogEngineProject.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Threads_AppUserId",
-                table: "Threads",
-                column: "AppUserId");
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    CommentID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Username = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: true),
+                    DatePublished = table.Column<DateTime>(nullable: false),
+                    PostID = table.Column<int>(nullable: true),
+                    StandardUserID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.CommentID);
+                });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Comment_AppUserId",
-                table: "Comment",
-                column: "AppUserId");
+            migrationBuilder.CreateTable(
+                name: "Threads",
+                columns: table => new
+                {
+                    ThreadID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    CreatorName = table.Column<string>(nullable: true),
+                    Bio = table.Column<string>(maxLength: 100, nullable: false),
+                    Category = table.Column<string>(nullable: true),
+                    ProfilePicURL = table.Column<string>(nullable: true),
+                    StandardUserID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Threads", x => x.ThreadID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Post",
+                columns: table => new
+                {
+                    PostID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(maxLength: 100, nullable: true),
+                    Content = table.Column<string>(maxLength: 100, nullable: true),
+                    ImageURL = table.Column<string>(nullable: true),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
+                    ThreadID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Post", x => x.PostID);
+                    table.ForeignKey(
+                        name: "FK_Post_Threads_ThreadID",
+                        column: x => x.ThreadID,
+                        principalTable: "Threads",
+                        principalColumn: "ThreadID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StandardUsers",
+                columns: table => new
+                {
+                    StandardUserID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    ConfirmPassword = table.Column<string>(nullable: false),
+                    Gender = table.Column<string>(nullable: true),
+                    DateJoined = table.Column<DateTime>(nullable: false),
+                    OwnedThreadThreadID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StandardUsers", x => x.StandardUserID);
+                    table.ForeignKey(
+                        name: "FK_StandardUsers_Threads_OwnedThreadThreadID",
+                        column: x => x.OwnedThreadThreadID,
+                        principalTable: "Threads",
+                        principalColumn: "ThreadID",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -258,11 +263,6 @@ namespace BlogEngineProject.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_OwnedThreadThreadID",
-                table: "AspNetUsers",
-                column: "OwnedThreadThreadID");
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -274,31 +274,60 @@ namespace BlogEngineProject.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Comment_AspNetUsers_AppUserId",
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_PostID",
                 table: "Comment",
-                column: "AppUserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
+                column: "PostID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_StandardUserID",
+                table: "Comment",
+                column: "StandardUserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Post_ThreadID",
+                table: "Post",
+                column: "ThreadID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StandardUsers_OwnedThreadThreadID",
+                table: "StandardUsers",
+                column: "OwnedThreadThreadID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Threads_StandardUserID",
+                table: "Threads",
+                column: "StandardUserID");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Comment_Post_PostID",
+                table: "Comment",
+                column: "PostID",
+                principalTable: "Post",
+                principalColumn: "PostID",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Threads_AspNetUsers_AppUserId",
+                name: "FK_Comment_StandardUsers_StandardUserID",
+                table: "Comment",
+                column: "StandardUserID",
+                principalTable: "StandardUsers",
+                principalColumn: "StandardUserID",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Threads_StandardUsers_StandardUserID",
                 table: "Threads",
-                column: "AppUserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
+                column: "StandardUserID",
+                principalTable: "StandardUsers",
+                principalColumn: "StandardUserID",
                 onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Comment_AspNetUsers_AppUserId",
-                table: "Comment");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Threads_AspNetUsers_AppUserId",
+                name: "FK_Threads_StandardUsers_StandardUserID",
                 table: "Threads");
 
             migrationBuilder.DropTable(
@@ -317,109 +346,22 @@ namespace BlogEngineProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comment");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Threads_AppUserId",
-                table: "Threads");
+            migrationBuilder.DropTable(
+                name: "Post");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Comment_AppUserId",
-                table: "Comment");
+            migrationBuilder.DropTable(
+                name: "StandardUsers");
 
-            migrationBuilder.DropColumn(
-                name: "AppUserId",
-                table: "Threads");
-
-            migrationBuilder.DropColumn(
-                name: "AppUserId",
-                table: "Comment");
-
-            migrationBuilder.AddColumn<int>(
-                name: "UserID",
-                table: "Threads",
-                nullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
-                table: "Post",
-                maxLength: 100,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldMaxLength: 100,
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Content",
-                table: "Post",
-                maxLength: 100,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldMaxLength: 100,
-                oldNullable: true);
-
-            migrationBuilder.AddColumn<int>(
-                name: "UserID",
-                table: "Comment",
-                nullable: true);
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    UserID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ConfirmPassword = table.Column<string>(nullable: false),
-                    DateJoined = table.Column<DateTime>(nullable: false),
-                    Gender = table.Column<string>(nullable: true),
-                    OwnedThreadThreadID = table.Column<int>(nullable: true),
-                    Password = table.Column<string>(nullable: false),
-                    Username = table.Column<string>(maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.UserID);
-                    table.ForeignKey(
-                        name: "FK_Users_Threads_OwnedThreadThreadID",
-                        column: x => x.OwnedThreadThreadID,
-                        principalTable: "Threads",
-                        principalColumn: "ThreadID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Threads_UserID",
-                table: "Threads",
-                column: "UserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comment_UserID",
-                table: "Comment",
-                column: "UserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_OwnedThreadThreadID",
-                table: "Users",
-                column: "OwnedThreadThreadID");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Comment_Users_UserID",
-                table: "Comment",
-                column: "UserID",
-                principalTable: "Users",
-                principalColumn: "UserID",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Threads_Users_UserID",
-                table: "Threads",
-                column: "UserID",
-                principalTable: "Users",
-                principalColumn: "UserID",
-                onDelete: ReferentialAction.Restrict);
+            migrationBuilder.DropTable(
+                name: "Threads");
         }
     }
 }

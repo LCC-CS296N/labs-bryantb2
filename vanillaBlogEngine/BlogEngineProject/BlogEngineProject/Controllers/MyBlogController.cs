@@ -80,7 +80,7 @@ namespace BlogEngineProject.Controllers
                 return RedirectToAction("SignUp");
             }
 
-            AppUser newUser = new AppUser()
+            StandardUser newUser = new StandardUser()
             {
                 Name = trimmedUsername,
                 Password = trimmedConfirmPassword,
@@ -134,7 +134,7 @@ namespace BlogEngineProject.Controllers
         {
             // no need to valid tempdata, only time this method gets called is if a valid username is passed
             string username = TempData["validUsername"].ToString();
-            AppUser userObject = userRepo.GetUserByUsername(username);
+            StandardUser userObject = userRepo.GetUserByUsername(username);
 
             return View("MyBlogMainPanel", userObject);
         }
@@ -158,7 +158,7 @@ namespace BlogEngineProject.Controllers
             // takes in userId from temp data entry
             // retrieves user object and then passes it into the dashboard view
             int userId = int.Parse(TempData["userId"].ToString());
-            AppUser userObject = userRepo.GetUserById(userId);
+            StandardUser userObject = userRepo.GetUserById(userId);
 
             return View("MyBlogMainPanel", userObject);
         }
@@ -182,7 +182,7 @@ namespace BlogEngineProject.Controllers
             }
 
             int userIdAsInt = int.Parse(userIdString);
-            AppUser userObject = userRepo.GetUserById(userIdAsInt);
+            StandardUser userObject = userRepo.GetUserById(userIdAsInt);
 
             if (TempData["ThreadCreationMessage"] != null)
             {
@@ -191,7 +191,7 @@ namespace BlogEngineProject.Controllers
             }
             // passing ownedThread and UserID in via viewbag because I will use a tuple in the view
             ViewBag.OwnedThread = userObject.OwnedThread;
-            ViewBag.UserID = userObject.UserID;
+            ViewBag.UserID = userObject.StandardUserID;
             return View();
         }
 
@@ -229,7 +229,7 @@ namespace BlogEngineProject.Controllers
             }
 
             int USERID = int.Parse(userId);
-            AppUser user = userRepo.GetUserById(USERID);
+            StandardUser user = userRepo.GetUserById(USERID);
 
             Thread newThread = new Thread()
             {
@@ -330,11 +330,11 @@ namespace BlogEngineProject.Controllers
             // get user by id
             // pass user object into view
             int ID = int.Parse(userId);
-            AppUser userObject = userRepo.GetUserById(ID);
+            StandardUser userObject = userRepo.GetUserById(ID);
 
             // using viewbag because I need to use a post model for validation
             ViewBag.OwnedThread = userObject.OwnedThread;
-            ViewBag.UserID = userObject.UserID;
+            ViewBag.UserID = userObject.StandardUserID;
             return View();
         }
 

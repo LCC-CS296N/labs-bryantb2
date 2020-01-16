@@ -54,9 +54,9 @@ namespace BlogEngineProject
             for(int i =0; i< usernames.Length; i++)
             {
                 // build user object
-                AppUser user = new AppUser()
+                StandardUser user = new StandardUser()
                 {
-                    UserID = ObjectIDBuilder.GetUserID(),
+                    StandardUserID = ObjectIDBuilder.GetUserID(),
                     Name = usernames[i],
                     Password = "password",
                     DateJoined = DateTime.Now
