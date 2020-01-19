@@ -43,7 +43,7 @@ namespace BlogEngineProject.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult SignUpRedirect(string username, string password, string ConfirmPassword)
+        public RedirectToActionResult SignUpRedirect(string Name, string Password, string ConfirmPassword)
         {
             // validate username and password (not empty AND trim trailing white space)
             // search repo to see if username is already taken
@@ -56,10 +56,10 @@ namespace BlogEngineProject.Controllers
             var trimmedPassword = "";
             var trimmedConfirmPassword = "";
 
-            if (username != null && password != null && ConfirmPassword != null)
+            if (Name != null && Name != null && ConfirmPassword != null)
             {
-                trimmedUsername = username.Trim();
-                trimmedPassword = password.Trim();
+                trimmedUsername = Name.Trim();
+                trimmedPassword = Password.Trim();
                 trimmedConfirmPassword = ConfirmPassword.Trim();
             }
             else
@@ -80,9 +80,9 @@ namespace BlogEngineProject.Controllers
                 return RedirectToAction("SignUp");
             }
 
-            User newUser = new User()
+            StandardUser newUser = new StandardUser()
             {
-                Username = trimmedUsername,
+                Name = trimmedUsername,
                 Password = trimmedConfirmPassword,
                 ConfirmPassword = trimmedConfirmPassword,
                 DateJoined = DateTime.Now
@@ -94,7 +94,7 @@ namespace BlogEngineProject.Controllers
         }
 
 
-        public RedirectToActionResult SignInRedirect(string username, string password)
+        public RedirectToActionResult SignInRedirect(string Name, string Password)
         {
             // validate username and password (not empty AND trim trailing white space)
             // search repo for username
@@ -104,10 +104,10 @@ namespace BlogEngineProject.Controllers
             var trimmedUsername = "";
             var trimmedPassword = "";
 
-            if (username != null && password != null)
+            if (Name != null && Password != null)
             {
-                trimmedUsername = username.Trim();
-                trimmedPassword = password.Trim();
+                trimmedUsername = Name.Trim();
+                trimmedPassword = Password.Trim();
             }
             else
             {
@@ -134,7 +134,7 @@ namespace BlogEngineProject.Controllers
         {
             // no need to valid tempdata, only time this method gets called is if a valid username is passed
             string username = TempData["validUsername"].ToString();
-            User userObject = userRepo.GetUserByUsername(username);
+            StandardUser userObject = userRepo.GetUserByUsername(username);
 
             return View("MyBlogMainPanel", userObject);
         }
@@ -158,7 +158,7 @@ namespace BlogEngineProject.Controllers
             // takes in userId from temp data entry
             // retrieves user object and then passes it into the dashboard view
             int userId = int.Parse(TempData["userId"].ToString());
-            User userObject = userRepo.GetUserById(userId);
+            StandardUser userObject = userRepo.GetUserById(userId);
 
             return View("MyBlogMainPanel", userObject);
         }
@@ -182,7 +182,7 @@ namespace BlogEngineProject.Controllers
             }
 
             int userIdAsInt = int.Parse(userIdString);
-            User userObject = userRepo.GetUserById(userIdAsInt);
+            StandardUser userObject = userRepo.GetUserById(userIdAsInt);
 
             if (TempData["ThreadCreationMessage"] != null)
             {
@@ -191,7 +191,7 @@ namespace BlogEngineProject.Controllers
             }
             // passing ownedThread and UserID in via viewbag because I will use a tuple in the view
             ViewBag.OwnedThread = userObject.OwnedThread;
-            ViewBag.UserID = userObject.UserID;
+            ViewBag.UserID = userObject.StandardUserID;
             return View();
         }
 
@@ -229,14 +229,14 @@ namespace BlogEngineProject.Controllers
             }
 
             int USERID = int.Parse(userId);
-            User user = userRepo.GetUserById(USERID);
+            StandardUser user = userRepo.GetUserById(USERID);
 
             Thread newThread = new Thread()
             {
                 Name = Name,
                 Bio = Bio,
                 Category = category,
-                CreatorName = user.Username
+                CreatorName = user.Name
             };
             user.OwnedThread = newThread;
             threadRepo.AddThreadtoRepo(newThread);
@@ -330,11 +330,11 @@ namespace BlogEngineProject.Controllers
             // get user by id
             // pass user object into view
             int ID = int.Parse(userId);
-            User userObject = userRepo.GetUserById(ID);
+            StandardUser userObject = userRepo.GetUserById(ID);
 
             // using viewbag because I need to use a post model for validation
             ViewBag.OwnedThread = userObject.OwnedThread;
-            ViewBag.UserID = userObject.UserID;
+            ViewBag.UserID = userObject.StandardUserID;
             return View();
         }
 

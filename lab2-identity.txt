@@ -1,6 +1,8 @@
 
 Models with validation annotations: Post, Thread, and User.
 
+Controllers with validation: Admin and MyBlog.
+
 -------------------------------------------------------------------->>>
 
 Annotations include: StringLength, RegularExpression, Required, and Compare.

@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace BlogEngineProject.Models
 {
-    public class User
+    public class StandardUser
     {
         // auto implemented properties
-        public int UserID { get; set; }
+        public int StandardUserID { get; set; }
 
         [StringLength(100, MinimumLength = 2)]
         [Required]
-        public String Username { get; set; }
+        public String Name { get; set; }
 
         [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "Must be 8 characters minimum and have an uppercase and lowercase letter, with a digit and special character")]
         [Required]

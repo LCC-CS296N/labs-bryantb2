@@ -54,10 +54,10 @@ namespace BlogEngineProject
             for(int i =0; i< usernames.Length; i++)
             {
                 // build user object
-                User user = new User()
+                StandardUser user = new StandardUser()
                 {
-                    UserID = ObjectIDBuilder.GetUserID(),
-                    Username = usernames[i],
+                    StandardUserID = ObjectIDBuilder.GetUserID(),
+                    Name = usernames[i],
                     Password = "password",
                     DateJoined = DateTime.Now
                 };
@@ -66,7 +66,7 @@ namespace BlogEngineProject
                 // pass creator username to thread
                 // set owned thread property
                 Thread thread = BuildThread(i);
-                thread.CreatorName = user.Username;
+                thread.CreatorName = user.Name;
                 user.OwnedThread = thread;
 
                 // set objects to object repos
