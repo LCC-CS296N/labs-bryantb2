@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlogEngineProject.Models
 {
@@ -9,8 +10,19 @@ namespace BlogEngineProject.Models
     {
         // auto implemented properties
         public int UserID { get; set; }
+
+        [StringLength(100, MinimumLength = 2)]
+        [Required]
         public String Username { get; set; }
+
+        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "Must be 8 characters minimum and have an uppercase and lowercase letter, with a digit and special character")]
+        [Required]
         public String Password { get; set; }
+
+        [Compare("Password")]
+        [Required]
+        public String ConfirmPassword { get; set; }
+
         public String Gender { get; set; }
         public DateTime DateJoined { get; set; }
         public Thread OwnedThread { get; set; }

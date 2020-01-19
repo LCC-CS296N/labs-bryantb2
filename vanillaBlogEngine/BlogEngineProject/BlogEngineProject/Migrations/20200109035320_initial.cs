@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlogEngineProject.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,8 +31,8 @@ namespace BlogEngineProject.Migrations
                 {
                     PostID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Title = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 100, nullable: false),
+                    Content = table.Column<string>(maxLength: 100, nullable: false),
                     ImageURL = table.Column<string>(nullable: true),
                     TimeStamp = table.Column<DateTime>(nullable: false),
                     ThreadID = table.Column<int>(nullable: true)
@@ -48,8 +48,9 @@ namespace BlogEngineProject.Migrations
                 {
                     UserID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(maxLength: 100, nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    ConfirmPassword = table.Column<string>(nullable: false),
                     Gender = table.Column<string>(nullable: true),
                     DateJoined = table.Column<DateTime>(nullable: false),
                     OwnedThreadThreadID = table.Column<int>(nullable: true)
@@ -65,9 +66,9 @@ namespace BlogEngineProject.Migrations
                 {
                     ThreadID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     CreatorName = table.Column<string>(nullable: true),
-                    Bio = table.Column<string>(nullable: true),
+                    Bio = table.Column<string>(maxLength: 100, nullable: false),
                     Category = table.Column<string>(nullable: true),
                     ProfilePicURL = table.Column<string>(nullable: true),
                     UserID = table.Column<int>(nullable: true)

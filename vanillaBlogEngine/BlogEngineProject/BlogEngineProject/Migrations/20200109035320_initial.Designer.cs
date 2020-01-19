@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogEngineProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191204051231_Initial")]
-    partial class Initial
+    [Migration("20200109035320_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,7 +52,9 @@ namespace BlogEngineProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<string>("ImageURL");
 
@@ -60,7 +62,9 @@ namespace BlogEngineProject.Migrations
 
                     b.Property<DateTime>("TimeStamp");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.HasKey("PostID");
 
@@ -75,13 +79,17 @@ namespace BlogEngineProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Bio");
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<string>("Category");
 
                     b.Property<string>("CreatorName");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<string>("ProfilePicURL");
 
@@ -100,15 +108,21 @@ namespace BlogEngineProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ConfirmPassword")
+                        .IsRequired();
+
                     b.Property<DateTime>("DateJoined");
 
                     b.Property<string>("Gender");
 
                     b.Property<int?>("OwnedThreadThreadID");
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .IsRequired();
 
-                    b.Property<string>("Username");
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.HasKey("UserID");
 

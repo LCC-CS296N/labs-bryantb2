@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlogEngineProject.Models
 {
@@ -9,7 +10,11 @@ namespace BlogEngineProject.Models
     {
         // auto setting properties
         public int PostID { get; set; }
+
+        [StringLength(100, MinimumLength = 2)]
         public String Title { get; set; }
+
+        [StringLength(100, MinimumLength = 15)]
         public String Content { get; set; }
         public String ImageURL { get; set; }
         public List<Comment> Comments { get; set; }
