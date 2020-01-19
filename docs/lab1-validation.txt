@@ -1,0 +1,13 @@
+
+Models with validation annotations: Post, Thread, and User.
+
+-------------------------------------------------------------------->>>
+
+Annotations include: StringLength, RegularExpression, Required, and Compare.
+
+-------------------------------------------------------------------->>>
+
+Note: Prior to this lab, I already implemented server-side validation in the controllers, so any place with 
+a form submission (sign up, sign in, add a post, build thread, ect.) has corresponding controller validation.
+
+-------------------------------------------------------------------->>>
