@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BlogEngineProject.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogEngineProject
 {
@@ -57,6 +58,8 @@ namespace BlogEngineProject
                 opts.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(opts => opts.LoginPath = "/Login");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,22 +76,28 @@ namespace BlogEngineProject
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            //app.UseHttpsRedirection();
+            /*app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=About}/{action=Index}/{id?}");
-            });
-
-            // adding authentication support
+            });*/
             app.UseAuthentication();
+            app.UseMvcWithDefaultRoute();
+            app.UseStaticFiles();
+            AppDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
 
             // adding seed data
             SeedData.Seed(app);
+
+            // seed admin account
+            //AppDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }

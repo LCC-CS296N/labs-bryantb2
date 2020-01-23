@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using BlogEngineProject.Models;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogEngineProject.Controllers
 {
-
+    [Authorize]
     public class AdminController : Controller
     {
         private UserManager<AppUser> userManager;
@@ -24,8 +25,10 @@ namespace BlogEngineProject.Controllers
             passwordHasher = passwordHash;
         }
 
+        [Authorize(Roles = "Admins")]
         public ViewResult Index() => View(userManager.Users);
 
+        [Authorize(Roles = "Admins")]
         public ViewResult Create() => View();
 
         [HttpPost]
