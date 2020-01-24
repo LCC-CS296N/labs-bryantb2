@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BlogEngineProject.Models
 {
+    [Authorize(Roles = "Admins, Member")]
     public class ManageRoleController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
