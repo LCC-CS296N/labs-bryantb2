@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BlogEngineProject.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admins")]
     public class AdminController : Controller
     {
         private UserManager<AppUser> userManager;
@@ -25,10 +25,8 @@ namespace BlogEngineProject.Controllers
             passwordHasher = passwordHash;
         }
 
-        [Authorize(Roles = "Admins")]
         public ViewResult Index() => View(userManager.Users);
 
-        [Authorize(Roles = "Admins")]
         public ViewResult Create() => View();
 
         [HttpPost]
