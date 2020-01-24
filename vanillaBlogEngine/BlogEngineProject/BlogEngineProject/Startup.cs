@@ -97,7 +97,7 @@ namespace BlogEngineProject
             SeedData.Seed(app);
 
             // seed admin account
-            //AppDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+            AppDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }
