@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using BlogEngineProject.Models;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogEngineProject.Controllers
 {
-
+    [Authorize(Roles = "Admins")]
     public class AdminController : Controller
     {
         private UserManager<AppUser> userManager;
