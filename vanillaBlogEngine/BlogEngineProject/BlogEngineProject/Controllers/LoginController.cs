@@ -51,7 +51,12 @@ namespace BlogEngineProject.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("LogoutView");
+        }
+
+        public IActionResult LogoutView()
+        {
+            return View("Logout");
         }
     }
 }

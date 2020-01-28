@@ -32,4 +32,10 @@
         }
     }
 </table>
-<a class="btn btn-primary" asp-action="Create">Create</a>
+
+<div class="d-flex">
+    <a class="btn btn-primary mr-3" asp-action="Create">Create New User</a>
+    <a asp-controller="ManageRole" asp-action="Index" class="btn btn-primary mr-3">Manage Roles</a>
+    <a asp-controller="Login" asp-action="Logout" class="btn btn-primary mr-3">Logout</a>
+</div>
+
