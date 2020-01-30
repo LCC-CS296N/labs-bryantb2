@@ -19,7 +19,7 @@ namespace BlogEngineProject.Repositories
         public DbSet<Post> Comments { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Thread> Threads { get; set; }
-        public DbSet<StandardUser> StandardUsers { get; set; }
+        //public DbSet<StandardUser> StandardUsers { get; set; }
 
         public static async Task CreateAdminAccount(IServiceProvider serviceProvider, IConfiguration configuration)
         {

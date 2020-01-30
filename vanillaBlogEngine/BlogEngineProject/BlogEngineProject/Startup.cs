@@ -75,26 +75,22 @@ namespace BlogEngineProject
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            //app.UseHttpsRedirection();
-            /*app.UseStaticFiles();
-            app.UseCookiePolicy();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseMvc(routes =>
+            
+            // fixing x-powered-by error
+            app.Use(async (context, next) =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=About}/{action=Index}/{id?}");
-            });*/
+                context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                await next();
+            });
+
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();
+
             AppDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
 
             // adding seed data
-            SeedData.Seed(app);
+            //SeedData.Seed(app);
 
             // seed admin account
             AppDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();

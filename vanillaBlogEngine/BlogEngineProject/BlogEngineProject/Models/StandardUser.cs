@@ -16,14 +16,6 @@ namespace BlogEngineProject.Models
         [Required]
         public String Name { get; set; }
 
-        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "Must be 8 characters minimum and have an uppercase and lowercase letter, with a digit and special character")]
-        [Required]
-        public String Password { get; set; }
-
-        [Compare("Password")]
-        [Required]
-        public String ConfirmPassword { get; set; }
-
         public String Gender { get; set; }
         public DateTime DateJoined { get; set; }
         public Thread OwnedThread { get; set; }

@@ -139,16 +139,6 @@ namespace BlogEngineProject.Controllers
             return View("MyBlogMainPanel", userObject);
         }
 
-        // SIGN IN METHODS FOR COMMENTS
-        //  ---------------------------------------------------------------------------------------------------->
-        //  ---------------------------------------------------------------------------------------------------->
-        /*public RedirectToActionResult ReplySignInRedirect(string username, string password)
-        {
-
-        }*/
-    
-
-
 
         // THESE METHODS REQUIRE A USER ID FOR ACCESS
         //  ---------------------------------------------------------------------------------------------------->
