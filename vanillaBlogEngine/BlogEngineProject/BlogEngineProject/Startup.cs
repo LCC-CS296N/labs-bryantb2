@@ -36,10 +36,16 @@ namespace BlogEngineProject
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // fixing anti forgery token error
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // injecting repositories into Message controller
-            services.AddTransient<IUserRepo, RealUserRepo>();
+            //services.AddTransient<IUserRepo, RealUserRepo>();
             services.AddTransient<IThreadRepo, RealThreadRepo>();
 
             // add context string for DB
@@ -76,21 +82,25 @@ namespace BlogEngineProject
                 app.UseHsts();
             }
             
-            // fixing x-powered-by error
             app.Use(async (context, next) =>
             {
+                // fixing x-powered-by header errors
                 context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
                 await next();
+
+                // fixing x-content-type
+                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                await next();
+
             });
 
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();
-
             AppDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
 
             // adding seed data
-            //SeedData.Seed(app);
+            SeedData.Seed(app);
 
             // seed admin account
             AppDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();

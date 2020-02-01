@@ -8,27 +8,41 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BlogEngineProject.Repositories
 {
-    public class RealUserRepo : IUserRepo
+    public class RealUserRepo //: IUserRepo
     {
         // CLASS FIELDS
         private AppDbContext context;
-
+        private UserManager<AppUser> userManager;
         // CONSTRUCTOR
-        public RealUserRepo(AppDbContext appContext)
+        //public RealUserRepo(AppDbContext appContext)
+        public RealUserRepo(UserManager<AppUser> usrMgr)
         {
-            this.context = appContext;
+            //this.context = appContext;
+            this.userManager = usrMgr;
         }
 
         // METHODS
-        public List<StandardUser> GetUsers()
+        //public List<StandardUser> GetUsers()
+        public List<AppUser> GetUsers()
         {
-            var userList = context.StandardUsers
+            /*var userList = context.StandardUsers
+                .Include(userObj => userObj.OwnedThread)
+                    .ThenInclude(thread => thread.Posts)
+                .ToList();
+            return userList;*/
+            var userList = userManager.Users
                 .Include(userObj => userObj.OwnedThread)
                     .ThenInclude(thread => thread.Posts)
                 .ToList();
             return userList;
         }
-        public StandardUser GetUserById(int userId) => FindUserById(userId);
+        // public StandardUser GetUserById(int userId) => FindUserById(userId);
+        public AppUser GetUserById(int userId)
+        {
+            string id = userId.ToString();
+            return userManager.FindByIdAsync(id);
+        }
+
         public StandardUser GetUserByUsername(string username) => FindUserByUsername(username);
         public bool GetUsernameEligibility(string username) => !(IsUsernameTaken(username));
         public bool CheckUserCredentials(string username, string password) => AreUserCredentialsValid(username, password);

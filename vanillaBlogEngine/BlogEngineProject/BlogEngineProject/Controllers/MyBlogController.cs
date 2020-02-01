@@ -5,17 +5,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlogEngineProject.Repositories;
 using BlogEngineProject.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace BlogEngineProject.Controllers
 {
     public class MyBlogController : Controller
     {
         // DEPENDENCY INJECTION
-        IUserRepo userRepo;
+        private UserManager<AppUser> userManager;
         IThreadRepo threadRepo;
-        public MyBlogController(IUserRepo u, IThreadRepo t)
+        RealUserRepo userRepo; // got lazy and decided not to use the interface
+        public MyBlogController(UserManager<AppUser> usrMgr, 
+            IThreadRepo t)
         {
-            userRepo = u;
+            userManager = usrMgr;
+            userRepo = new RealUserRepo(userManager); // inject user manager
             threadRepo = t;
         }
 
@@ -138,7 +142,6 @@ namespace BlogEngineProject.Controllers
 
             return View("MyBlogMainPanel", userObject);
         }
-
 
         // THESE METHODS REQUIRE A USER ID FOR ACCESS
         //  ---------------------------------------------------------------------------------------------------->
@@ -328,12 +331,12 @@ namespace BlogEngineProject.Controllers
             return View();
         }
 
-        public IActionResult EditProfile(string userId)
+        public IActionResult EditProfile()//string userId)
         {
             // NOTE: object IDs are passed in via viewbag because there we don't want to build DB retrieval logic into the view
             // Utilize userId to get owned thread
             // pass thread object to view
-            int USERID = int.Parse(userId);
+            //int USERID = int.Parse(userId);
             Thread thread = userRepo.GetUserById(USERID).OwnedThread;
 
             ViewBag.UserId = userId;

@@ -10,12 +10,21 @@ namespace BlogEngineProject.Controllers
     {
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
+        private IUserValidator<AppUser> userValidator;
+        private IPasswordValidator<AppUser> passwordValidator;
+        private IPasswordHasher<AppUser> passwordHasher;
 
         public MyBlogAccountController(UserManager<AppUser> userMgr,
-                SignInManager<AppUser> signinMgr)
+                SignInManager<AppUser> signinMgr,
+                IUserValidator<AppUser> userValid,
+                IPasswordValidator<AppUser> passValid,
+                IPasswordHasher<AppUser> passwordHash)
         {
             userManager = userMgr;
             signInManager = signinMgr;
+            userValidator = userValid;
+            passwordValidator = passValid;
+            passwordHasher = passwordHash;
         }
 
         [AllowAnonymous]
