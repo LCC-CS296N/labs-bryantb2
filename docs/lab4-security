@@ -1,0 +1,13 @@
+
+Models added: CreateuserViewModel.cs, LoginViewModel.cs, RoleEditViewModel.cs, RoleMemberViewModel.cs
+
+-------------------------------------------------------------------->>>
+
+Controllers added: AdminController, LoginController, ManageRoleController
+
+-------------------------------------------------------------------->>>
+
+Other Features: appsettings.json admin seed data added, manageRole views, login views, admin views,
+and role initializing static method in appDBContext
+
+-------------------------------------------------------------------->>>
