@@ -44,6 +44,10 @@ namespace BlogEngineProject
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddDbContext<AppDbContext>(
+                    options => options.UseSqlServer(
+                        Configuration["ConnectionString"]));
+
             // injecting repositories into Message controller
             services.AddTransient<IUserRepo, RealUserRepo>();
             services.AddTransient<IThreadRepo, RealThreadRepo>();
