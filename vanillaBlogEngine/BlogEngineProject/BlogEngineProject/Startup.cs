@@ -36,6 +36,12 @@ namespace BlogEngineProject
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // fixing anti forgery token error
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // injecting repositories into Message controller
@@ -75,19 +81,21 @@ namespace BlogEngineProject
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            //app.UseHttpsRedirection();
-            /*app.UseStaticFiles();
-            app.UseCookiePolicy();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseMvc(routes =>
+            
+            app.Use(async (context, next) =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=About}/{action=Index}/{id?}");
-            });*/
+                // fixing x-powered-by header errors
+                context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                await next();
+
+                // fixing x-content-type
+                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                await next();
+
+                context.Response.Headers.Add("","");
+                await next();
+            });
+
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();

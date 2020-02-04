@@ -138,18 +138,7 @@ namespace BlogEngineProject.Controllers
 
             return View("MyBlogMainPanel", userObject);
         }
-
-        // SIGN IN METHODS FOR COMMENTS
-        //  ---------------------------------------------------------------------------------------------------->
-        //  ---------------------------------------------------------------------------------------------------->
-        /*public RedirectToActionResult ReplySignInRedirect(string username, string password)
-        {
-
-        }*/
-    
-
-
-
+        
         // THESE METHODS REQUIRE A USER ID FOR ACCESS
         //  ---------------------------------------------------------------------------------------------------->
         //  ---------------------------------------------------------------------------------------------------->
@@ -165,33 +154,37 @@ namespace BlogEngineProject.Controllers
 
         public IActionResult GettingStarted(string userId="")
         {
-            // SPECIAL CASE: this action method needs to accept both get parameters OR tempdata (both of which represent a userId)
-            // this is done because a the dashboard view might call this action method, or the BuildThread action method will redirect to it internally
-            // Check if userId parameter is empty
-            // if empty use tempdata
-            // Get user by id
-            // Pass in userId to view]
-            var userIdString = "";
-            if(userId != "")
+            int userIdAsInt;
+            var result = int.TryParse(userId, out userIdAsInt);
+            if (result)
             {
-                userIdString = userId;
-            }
-            else
-            {
-                userIdString = TempData["userId"].ToString();
-            }
+                // SPECIAL CASE: this action method needs to accept both get parameters OR tempdata (both of which represent a userId)
+                // this is done because a the dashboard view might call this action method, or the BuildThread action method will redirect to it internally
+                // Check if userId parameter is empty
+                // if empty use tempdata
+                // Get user by id
+                // Pass in userId to view]
+                var userIdString = "";
+                if (userId != "")
+                {
+                    userIdString = userId;
+                }
+                else
+                {
+                    userIdString = TempData["userId"].ToString();
+                }
+                StandardUser userObject = userRepo.GetUserById(userIdAsInt);
 
-            int userIdAsInt = int.Parse(userIdString);
-            StandardUser userObject = userRepo.GetUserById(userIdAsInt);
-
-            if (TempData["ThreadCreationMessage"] != null)
-            {
-                // if message tempdata entry is not null, pass the message to the view
-                ViewBag.ErrorMessage = TempData["ThreadCreationMessage"];
+                if (TempData["ThreadCreationMessage"] != null)
+                {
+                    // if message tempdata entry is not null, pass the message to the view
+                    ViewBag.ErrorMessage = TempData["ThreadCreationMessage"];
+                }
+                // passing ownedThread and UserID in via viewbag because I will use a tuple in the view
+                ViewBag.OwnedThread = userObject.OwnedThread;
+                ViewBag.UserID = userObject.StandardUserID;
+                return View();
             }
-            // passing ownedThread and UserID in via viewbag because I will use a tuple in the view
-            ViewBag.OwnedThread = userObject.OwnedThread;
-            ViewBag.UserID = userObject.StandardUserID;
             return View();
         }
 
