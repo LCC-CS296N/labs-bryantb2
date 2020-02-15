@@ -9,6 +9,7 @@ namespace BlogEngineProject.Models
 {
     public class AppUser : IdentityUser
     {
-        // no extra properties necessary
+        public String FirstName {get; set;}
+        public DateTime BirthDate {get; set;}
     }
 }
