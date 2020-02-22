@@ -50,7 +50,7 @@ namespace BlogEngineProject
 
             // add context string for DB
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
-                Configuration["ConnectionString"]));
+                Configuration["ConnectionStrings:Connect"]));
 
             // adds identity to project
             services.AddIdentity<AppUser, IdentityRole>(opts =>
