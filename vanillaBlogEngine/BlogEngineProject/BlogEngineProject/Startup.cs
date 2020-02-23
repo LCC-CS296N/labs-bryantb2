@@ -14,6 +14,7 @@ using BlogEngineProject.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Hosting;
 
 namespace BlogEngineProject
 {
@@ -36,40 +37,28 @@ namespace BlogEngineProject
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            // fixing anti forgery token error
-            services.AddMvc(options =>
+            services.AddAntiforgery(options =>
             {
-                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                options.FormFieldName = "AntiforgeryFieldname";
+                options.HeaderName = "X-CSRF-TOKEN-HEADERNAME";
+                options.SuppressXFrameOptionsHeader = false;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
 
-            // injecting repositories into Message controller
             services.AddTransient<IUserRepo, RealUserRepo>();
             services.AddTransient<IThreadRepo, RealThreadRepo>();
 
-            // add context string for DB
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
                 Configuration["ConnectionStrings:Connect"]));
 
-            // adds identity to project
-            services.AddIdentity<AppUser, IdentityRole>(opts =>
-            {
-                opts.User.RequireUniqueEmail = true;
-                //opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
-                opts.Password.RequiredLength = 6;
-                opts.Password.RequireNonAlphanumeric = false;
-                opts.Password.RequireLowercase = false;
-                opts.Password.RequireUppercase = false;
-                opts.Password.RequireDigit = false;
-            }).AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
-
-            services.ConfigureApplicationCookie(opts => opts.LoginPath = "/Login");
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -78,33 +67,30 @@ namespace BlogEngineProject
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
             app.Use(async (context, next) =>
             {
-                // fixing x-powered-by header errors
-                context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
-                await next();
-
-                // fixing x-content-type
-                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
-                await next();
-
-                context.Response.Headers.Add("","");
+                context.Response.Headers.Add("X-Xss-Protection", "1");
                 await next();
             });
-
-            app.UseAuthentication();
-            app.UseMvcWithDefaultRoute();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            AppDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+            app.UseCookiePolicy();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
 
-            // adding seed data
-            SeedData.Seed(app);
+            //context.Database.Migrate();
 
-            // seed admin account
+            // SeedData.Seed(context);
+
             AppDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }

@@ -21,7 +21,7 @@ namespace BlogEngineProject.Controllers
             threadRepo = t;
         }
 
-        /*[HttpPost]
+        [HttpPost]
         //[Consumes("application/json")]
         public IActionResult AddUser([FromBody] CreateUserViewModel userViewModel)
         {
@@ -41,13 +41,13 @@ namespace BlogEngineProject.Controllers
             {
                 return BadRequest();
             }
-        }*/
+        }
 
-        [HttpPost]
+        /*[HttpPost]
         public String AddUser([FromBody] CreateUserViewModel userViewModel)
         {
             return "hello world";
-        }
+        }*/
 
         [HttpGet]
         public IActionResult GetAllUsers()
