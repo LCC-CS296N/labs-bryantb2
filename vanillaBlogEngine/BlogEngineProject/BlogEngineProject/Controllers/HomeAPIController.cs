@@ -9,7 +9,7 @@ using BlogEngineProject.Repositories;
 namespace BlogEngineProject.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class HomeAPIController : ControllerBase
     {
         // DEPENDENCY INJECTION
@@ -39,7 +39,7 @@ namespace BlogEngineProject.Controllers
 
         [HttpGet("{searchString}")]
         [Consumes("application/json")]
-        public IActionResult FindThreadsByKeyword(string searchString)
+        public IActionResult SearchThreads(string searchString)
         {
             List<Thread> searchResults = null;
             // called the repo search function
@@ -54,7 +54,7 @@ namespace BlogEngineProject.Controllers
 
         [HttpGet("{threadID}")]
         [Consumes("application/json")]
-        public IActionResult FindThreadById(int threadID)
+        public IActionResult GetById(int threadID)
         {
             Thread searchResult;
             // search for the thread by name
@@ -71,6 +71,14 @@ namespace BlogEngineProject.Controllers
             return View(searchResult);*/
         }
 
-
+        [HttpGet]
+        public IActionResult GetAllThreads()
+        {
+            List<Thread> threadList = threadRepo.GetThreads();
+            if (threadList.Count != 0 && threadList != null)
+                return Ok(threadList);
+            else
+                return NotFound();
+        }
     }
 }

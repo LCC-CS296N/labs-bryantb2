@@ -95,7 +95,7 @@ namespace BlogEngineProject.Controllers
             }
             else
             {
-                return BadRequest();
+                return Ok(); // means user is gone
             }
         }
 

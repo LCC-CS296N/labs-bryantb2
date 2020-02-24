@@ -1,0 +1,5 @@
+Added the following API controllers:
+
+	- HomeAPIController
+	- UserAPIController
+	- PostAPIController
