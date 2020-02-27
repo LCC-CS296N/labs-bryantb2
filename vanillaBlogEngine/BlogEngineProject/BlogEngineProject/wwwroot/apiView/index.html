@@ -5,38 +5,27 @@
     <title></title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="/apiView/threadAPIClient.js"></script>
+    <script>
+        window.onload = async () => {
+            const users = await fetchAllUsers();
+            buildUserTable(users);
+        }
+    </script>
 </head>
 <body class="container">
     <h1 class="text-center my-5">ASP.NET Client-Side API Test</h1>
-    <table class="table">
+    <table id="userTable" class="table">
         <thead class="bg-dark text-light">
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">U. ID</th>
                 <th scope="col">Username</th>
                 <th scope="col">Password</th>
-                <th scope="col">Date Joined (Unix)</th>
+                <th scope="col">Date Joined</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-            </tr>
-        </tbody>
+        <tbody id="userTableBody"></tbody>
     </table>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>

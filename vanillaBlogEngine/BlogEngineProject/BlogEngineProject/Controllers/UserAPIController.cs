@@ -22,7 +22,6 @@ namespace BlogEngineProject.Controllers
         }
 
         [HttpPost]
-        //[Consumes("application/json")]
         public IActionResult AddUser([FromBody] CreateUserViewModel userViewModel)
         {
             if(userViewModel != null)
@@ -43,12 +42,6 @@ namespace BlogEngineProject.Controllers
             }
         }
 
-        /*[HttpPost]
-        public String AddUser([FromBody] CreateUserViewModel userViewModel)
-        {
-            return "hello world";
-        }*/
-
         [HttpGet]
         public IActionResult GetAllUsers()
         {
@@ -60,12 +53,9 @@ namespace BlogEngineProject.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Consumes("application/json")]
         public IActionResult DeleteUserById([FromRoute] int id)
         {
             var deletedUser = userRepo.RemoveUserfromRepo(id);
-            //Console.WriteLine("logging deleted user");
-            //Console.WriteLine(deletedUser);
             if (deletedUser != null)
                 return Ok();
             else
@@ -73,7 +63,6 @@ namespace BlogEngineProject.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Consumes("application/json")]
         public IActionResult UpdateUserById([FromBody] CreateUserViewModel userViewModel, int id)
         {
             var deletedUser = userRepo.RemoveUserfromRepo(id);
