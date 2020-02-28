@@ -39,10 +39,77 @@ const deleteUserById = async (userId) => {
 
 // update user by Id
 const updateUserById = async (userData, userId) => {
-
+    const response = await fetch(THREAD_API + "/" + userId, {
+        method: 'PUT',
+        body: JSON.stringify(userData),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const final = await response.json();
+    return final;
 };
 
 // EVENT HANDLERS
+const updateUserEvent = async (e) => {
+    e.preventDefault()
+    // get userId value
+    // update user
+    // display message
+    // refresh table
+    // refresh user dropdown
+    const dropDown = document.getElementById("userDropdown");
+    const selectedUserId = dropDown.options[dropDown.selectedIndex].value;
+    const updatedEmail = document.getElementById("updateEmailInput").value;
+    const updatedName = document.getElementById("updateUsernameInput").value;
+    const updatedPassword = document.getElementById("updatePasswordInput").value;
+
+    // validation
+    let shouldDisplayMsg = false;
+    let msgText = "";
+    if (selectedUserId == "") {
+        shouldDisplayMsg = true;
+        msgText = "Selected user is invalid";
+    }
+    if (updatedEmail == "") {
+        shouldDisplayMsg = true;
+        msgText = "Email text is invalid";
+    }
+    if (updatedPassword == "") {
+        shouldDisplayMsg = true;
+        msgText = "Password text is invalid";
+    }
+    if (updatedName == "") {
+        shouldDisplayMsg = true;
+        msgText = "Username text is invalid";
+    }
+    // show msg or send put request
+    if (!shouldDisplayMsg) {
+        const userData = {
+            Name: updatedName,
+            Email: updatedEmail,
+            Password: updatedPassword
+        };
+        const user = await updateUserById(userData, selectedUserId);
+        if (user != null) {
+            // rebuild table
+            // clear form
+            // show success
+            const userList = await fetchAllUsers();
+            buildUserTable(userList);
+            buildUserDropdown(userList);
+            resetUserdropdown();
+            resetUpdateHTMlForm();
+            showUpdateMsg();
+
+        } else {
+            showFailMsg("Add user failed");
+        }
+    } else {
+        showUpdateFailMsg(msgText);
+    }
+}
+
 const deleteUserEvent = async (e) => {
     console.log('delete event has fired');
     e.preventDefault();
@@ -117,6 +184,17 @@ const addUserEvent = async (e) => {
 }
 
 // UI RENDERING METHODS
+const buildUserDropdown = (userList) => {
+    // creates dropdown options from userlist
+    const userDropdown = document.getElementById("userDropdown");
+    userList.forEach((user) => {
+        const option = document.createElement('option');
+        option.value = user.standardUserID;
+        option.text = user.name;
+        userDropdown.appendChild(option);
+    });
+}
+
 const buildUserTable = (userList) => {
     // remember that we are using the standardUser model
     const tableBody = document.getElementById("userTableBody");
@@ -157,11 +235,41 @@ const resetHTMLForm = () => {
     document.getElementById("passwordInput").value = "";
 }
 
+const resetUpdateHTMlForm = () => {
+    document.getElementById("updateEmailInput").value = "";
+    document.getElementById("updateUsernameInput").value = "";
+    document.getElementById("updatePasswordInput").value = "";
+}
+
 const resetViewUser = () => {
     const userView = document.getElementById("viewUserById");
     userView.innerHTML = "";
 }
 
+const resetUserdropdown = () => {
+    const dropDown = document.getElementById("userDropdown");
+    dropDown.selectedIndex = 0;
+}
+
+// update user msg
+const showUpdateMsg = () => {
+    const msgBox = document.getElementById("updateSuccessMessage");
+    msgBox.classList.add('text-success');
+    msgBox.innerHTML = "User was updated!";
+
+    setTimeout(() => {
+        msgBox.innerHTML = "";
+        msgBox.classList.remove('text-success');
+    }, 2000)
+}
+
+const showUpdateFailMsg = (msg) => {
+    const msgBox = document.getElementById("updateSuccessMessage");
+    msgBox.classList.add('text-danger');
+    msgBox.innerHTML = msg;
+}
+
+// delete user msg
 const showDeletedMsg = (deletedUserId) => {
     const msgBox = document.getElementById("viewUserById");
     msgBox.classList.add('text-danger');
@@ -173,6 +281,7 @@ const showDeletedMsg = (deletedUserId) => {
     }, 2000)
 }
 
+// add user messages
 const showFailMsg = (msg) => {
     const msgBox = document.getElementById("successMessage");
     msgBox.classList.add('text-danger');

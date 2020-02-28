@@ -10,6 +10,7 @@
         window.onload = async () => {
             const users = await fetchAllUsers();
             buildUserTable(users);
+            buildUserDropdown(users);
         }
     </script>
 </head>
@@ -33,10 +34,10 @@
 
     <div class="my-5">
         <h3 class="text-center my-2">View Specific User</h3>
-        <div id="viewUserById"></div>
+        <div id="viewUserById" class="text-center">No User Selected</div>
     </div>
 
-    <div>
+    <div class="my-5">
         <h3 class="text-center my-2">Add User to API Data</h3>
         <h5 id="successMessage"></h5>
         <form id="addUserForm">
@@ -54,6 +55,29 @@
                 <input type="password" class="form-control" id="passwordInput" placeholder="Password">
             </div>
             <button onclick="{addUserEvent(event)}" class="btn btn-primary">Add User</button>
+        </form>
+    </div>
+
+    <div class="my-5">
+        <h3 class="text-center my-2">Update User Data</h3>
+        <h5 id="updateSuccessMessage"></h5>
+        <select id="userDropdown" class="w-100 mb-4">
+            <option value="">Select a User</option>
+        </select>
+        <form id="updateUserForm">
+            <div class="form-group">
+                <label for="updateEmailInput">Update Email</label>
+                <input type="email" class="form-control" id="updateEmailInput" aria-describedby="emailHelp" placeholder="Email123@example.com">
+            </div>
+            <div class="form-group">
+                <label for="updateUsernameInput">Update Username</label>
+                <input type="text" class="form-control" id="updateUsernameInput" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label for="updatePasswordInput">Update Password</label>
+                <input type="password" class="form-control" id="updatePasswordInput" placeholder="Password">
+            </div>
+            <button onclick="{updateUserEvent(event)}" class="btn btn-primary">Update User</button>
         </form>
     </div>
 
