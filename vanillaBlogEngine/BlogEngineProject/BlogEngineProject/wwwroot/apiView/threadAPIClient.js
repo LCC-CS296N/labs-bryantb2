@@ -1,7 +1,6 @@
 ﻿const THREAD_API = "https://localhost:44391/api/UserAPI";
 
 // get all users
-//const fetchAllUsers = async () => {
 const fetchAllUsers = async () => {
     const response = await fetch(THREAD_API);
     const final = await response.json();
@@ -9,6 +8,7 @@ const fetchAllUsers = async () => {
     return final;
 };
 
+// get user by id
 const fetchUserById = async (userId) => {
     const response = await fetch(THREAD_API + "/" + userId)
     const final = await response.json();
@@ -30,7 +30,11 @@ const addUser = async (userData) => {
 
 // delete user by id
 const deleteUserById = async (userId) => {
-
+    const response = await fetch(THREAD_API + "/" + userId, {
+        method: 'DELETE'
+    });
+    const final = await response.json();
+    return final;
 };
 
 // update user by Id
@@ -39,8 +43,21 @@ const updateUserById = async (userData, userId) => {
 };
 
 // EVENT HANDLERS
+const deleteUserEvent = async (e) => {
+    console.log('delete event has fired');
+    e.preventDefault();
+    // get user value
+    // delete user
+    // get user list
+    // refresh table
+    const userId = e.target.value;
+    const deletedUser = await deleteUserById(userId);
+    const userList = await fetchAllUsers();
+    buildUserTable(userList);
+    showDeletedMsg(deletedUser.standardUserID);
+}
+
 const getUserEvent = async (e) => {
-    console.log('handle get user event has fired!!!')
     e.preventDefault;
     // get user data
     // build HTML
@@ -126,6 +143,9 @@ const buildSingleUserHTML = (userObject) => {
             <div class="p-2">Username: ${userObject.name}</div>
             <div class="p-2">Password: ${userObject.password}</div>
             <div class="p-2">Password: ${userObject.dateJoined}</div>
+            <div class="p-2">
+                <button onclick={deleteUserEvent(event)} value="${userObject.standardUserID}" class="btn btn-danger">Delete this User?</button>
+            </div>
         </div>`
     );
     userView.innerHTML = userViewHTML;
@@ -135,6 +155,22 @@ const resetHTMLForm = () => {
     document.getElementById("emailInput").value = "";
     document.getElementById("usernameInput").value = "";
     document.getElementById("passwordInput").value = "";
+}
+
+const resetViewUser = () => {
+    const userView = document.getElementById("viewUserById");
+    userView.innerHTML = "";
+}
+
+const showDeletedMsg = (deletedUserId) => {
+    const msgBox = document.getElementById("viewUserById");
+    msgBox.classList.add('text-danger');
+    msgBox.innerHTML = "User " + deletedUserId + " was deleted!";
+
+    setTimeout(() => {
+        msgBox.innerHTML = "";
+        msgBox.classList.remove('text-danger');
+    }, 2000)
 }
 
 const showFailMsg = (msg) => {

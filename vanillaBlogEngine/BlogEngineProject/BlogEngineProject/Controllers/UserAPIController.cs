@@ -67,7 +67,7 @@ namespace BlogEngineProject.Controllers
         {
             var deletedUser = userRepo.RemoveUserfromRepo(id);
             if (deletedUser != null)
-                return Ok();
+                return Ok(deletedUser);
             else
                 return NotFound();
         }
