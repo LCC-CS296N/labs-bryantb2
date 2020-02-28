@@ -15,18 +15,48 @@
 </head>
 <body class="container">
     <h1 class="text-center my-5">ASP.NET Client-Side API Test</h1>
-    <table id="userTable" class="table">
-        <thead class="bg-dark text-light">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">U. ID</th>
-                <th scope="col">Username</th>
-                <th scope="col">Password</th>
-                <th scope="col">Date Joined</th>
-            </tr>
-        </thead>
-        <tbody id="userTableBody"></tbody>
-    </table>
+    <div id="userTableContainer">
+        <table class="table">
+            <thead class="bg-dark text-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">U. ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Date Joined</th>
+                    <th scope="col">Get By Id</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody"></tbody>
+        </table>
+    </div>
+
+    <div class="my-5">
+        <h3 class="text-center my-2">View Specific User</h3>
+        <div id="viewUserById"></div>
+    </div>
+
+    <div>
+        <h3 class="text-center my-2">Add User to API Data</h3>
+        <div id="successMessage"></div>
+        <form id="addUserForm">
+            <div class="form-group">
+                <label for="emailInput">Email</label>
+                <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Email123@example.com">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else... probably ;)</small>
+            </div>
+            <div class="form-group">
+                <label for="usernameInput">Username</label>
+                <input type="text" class="form-control" id="usernameInput" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label for="passwordInput">Password</label>
+                <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+            </div>
+            <button onclick="{addUserEvent(event)}" class="btn btn-primary">Add User</button>
+        </form>
+    </div>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>

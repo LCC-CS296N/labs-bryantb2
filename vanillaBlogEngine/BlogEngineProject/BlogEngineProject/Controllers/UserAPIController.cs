@@ -52,6 +52,16 @@ namespace BlogEngineProject.Controllers
                 return NotFound();
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetUserByID(int id)
+        {
+            var user = userRepo.GetUserById(id);
+            if (user != null)
+                return Ok(user);
+            else
+                return NotFound();
+        }
+
         [HttpDelete("{id}")]
         public IActionResult DeleteUserById([FromRoute] int id)
         {
