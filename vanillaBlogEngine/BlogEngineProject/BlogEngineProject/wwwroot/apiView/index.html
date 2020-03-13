@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="/apiView/threadAPIClient.js"></script>
+    <script>
+        window.onload = async () => {
+            const users = await fetchAllUsers();
+            buildUserTable(users);
+            buildUserDropdown(users);
+        }
+    </script>
+</head>
+<body class="container">
+    <h1 class="text-center my-5">ASP.NET Client-Side API Test</h1>
+    <div id="userTableContainer">
+        <table class="table">
+            <thead class="bg-dark text-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">U. ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Date Joined</th>
+                    <th scope="col">Get By Id</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody"></tbody>
+        </table>
+    </div>
+
+    <div class="my-5">
+        <h3 class="text-center my-2">View Specific User</h3>
+        <div id="viewUserById" class="text-center">No User Selected</div>
+    </div>
+
+    <div class="my-5">
+        <h3 class="text-center my-2">Add User to API Data</h3>
+        <h5 id="successMessage"></h5>
+        <form id="addUserForm">
+            <div class="form-group">
+                <label for="emailInput">Email</label>
+                <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Email123@example.com">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else... probably ;)</small>
+            </div>
+            <div class="form-group">
+                <label for="usernameInput">Username</label>
+                <input type="text" class="form-control" id="usernameInput" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label for="passwordInput">Password</label>
+                <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+            </div>
+            <button onclick="{addUserEvent(event)}" class="btn btn-primary">Add User</button>
+        </form>
+    </div>
+
+    <div class="my-5">
+        <h3 class="text-center my-2">Update User Data</h3>
+        <h5 id="updateSuccessMessage"></h5>
+        <select id="userDropdown" class="w-100 mb-4">
+            <option value="">Select a User</option>
+        </select>
+        <form id="updateUserForm">
+            <div class="form-group">
+                <label for="updateEmailInput">Update Email</label>
+                <input type="email" class="form-control" id="updateEmailInput" aria-describedby="emailHelp" placeholder="Email123@example.com">
+            </div>
+            <div class="form-group">
+                <label for="updateUsernameInput">Update Username</label>
+                <input type="text" class="form-control" id="updateUsernameInput" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label for="updatePasswordInput">Update Password</label>
+                <input type="password" class="form-control" id="updatePasswordInput" placeholder="Password">
+            </div>
+            <button onclick="{updateUserEvent(event)}" class="btn btn-primary">Update User</button>
+        </form>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+</body>
+</html>
